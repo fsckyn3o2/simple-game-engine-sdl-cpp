@@ -1,0 +1,4 @@
+nametables = {
+    "title",
+    "generic"
+}

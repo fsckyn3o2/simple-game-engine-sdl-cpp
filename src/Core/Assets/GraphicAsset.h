@@ -78,7 +78,7 @@ public:
 
 class GraphicAsset {
 private:
-    SDL_Surface* _surface;
+    SDL_Surface* _surface{};
 public:
     GraphicAsset(std::string_view _id, unsigned int _type, GraphicAssetResolution *_resolution, std::string_view _filename, void* _config):
         id(std::string{ _id }), type(_type), resolution(_resolution), filename(std::string{ _filename }), config(_config) { };

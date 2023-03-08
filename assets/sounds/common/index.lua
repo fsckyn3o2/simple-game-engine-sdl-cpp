@@ -1,26 +1,26 @@
 sounds = {
     {
-      id = "title",
-      filename = "title.wav"
+      id = "logo",
+      filename = "common/logo.wav"
     },
     {
         id = "click",
-        filename = "click.wav"
+        filename = "common/click.wav"
     },
     {
         id = "fire",
-        filename = "fire.wav"
+        filename = "common/fire.wav"
     },
     {
         id = "win",
-        filename = "win.wav"
+        filename = "common/win.wav"
     },
     {
         id = "lose",
-        filename = "lose.wav"
+        filename = "common/lose.wav"
     },
     {
         id = "gameover",
-        filename = "gameover.wav"
+        filename = "common/gameover.wav"
     }
 }

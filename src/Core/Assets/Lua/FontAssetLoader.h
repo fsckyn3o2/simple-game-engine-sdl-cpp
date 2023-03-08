@@ -19,17 +19,19 @@ public:
 
             std::string_view _id = value.get_or<std::string_view>("id", "");
             sol::table typeslist = value.get_or<sol::table>("type", sol::nil);
-            std::string_view filename = value.get_or<std::string_view>("filename", "");
+            std::string filename = value.get_or<std::string>("filename", "");
 
             if (_id.empty() || typeslist == sol::nil || filename.empty()) {
                 std::cout << "\n<<< AssetManager - FontAsset [" << _id << "] will not be generated : Id, Type, Filename attribute are mandatory for FondAsset object >>>";
                 return std::nullopt;
             }
 
-            std::filesystem::path filePath(std::string("./") + FONT_ASSET_ROOT_DIR + filename.data());
+            std::filesystem::path filePath( std::string(FONT_ASSET_ROOT_DIR) + filename);
             if (!std::filesystem::exists(filePath)) {
                 std::cout << "\n<<< AssetManager - FontAsset [" << _id << "] will not be generated : '" << filename << "' not found >>>";
                 return std::nullopt;
+            } else {
+                filename = std::filesystem::absolute(filePath);
             }
 
             // Convert types list of string to an int with FontFileAsset::typeOf method.
@@ -38,7 +40,7 @@ public:
                 typeListInt += FontFileAsset::typeOf(value.as<std::string>());
             });
 
-            fontFiles.push_back(new FontFileAsset(_id, typeListInt, absolute(filePath).c_str()));
+            fontFiles.push_back(new FontFileAsset(_id, typeListInt, filename));
 
             return std::nullopt;
         });

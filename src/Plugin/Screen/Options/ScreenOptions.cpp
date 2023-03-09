@@ -1,8 +1,4 @@
-//
-// Created by nico on 12/1/21.
-//
-
-#include "ScreenOptions.h"
+#include <Plugin/Screen/Options/ScreenOptions.h>
 
 void ScreenOptions::init() {
 

@@ -37,10 +37,6 @@ public:
         rtrim(s);
     }
 
-    static std::string_view trim(std::string_view s) {
-       return s.substr(s.find_first_not_of(' '), s.find_last_not_of(' '));
-    }
-
 // trim from start (copying)
     static std::string ltrim_copy(std::string s) {
         ltrim(s);

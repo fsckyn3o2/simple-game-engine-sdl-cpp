@@ -33,11 +33,10 @@ void TableManager::loadCommonNameTable() {
     for (const auto &value : idOfNameTables) {
 
         LuaUtils::resetLua();
-        sol::state lua;
 
         const std::string filename = std::string(NAMETABLE_ASSET_ROOT_DIR) + "common/" + value + ".lua";
-        std::filesystem::path filePath(filename);
-        if (!std::filesystem::exists(filePath)) {
+        std::filesystem::path filePathNametable(filename);
+        if (!std::filesystem::exists(filePathNametable)) {
             std::cout << "\n<<< AssetManager - CommonNameTable config file not found [" << filename << "] >>>";
             return ;
         }
@@ -45,14 +44,14 @@ void TableManager::loadCommonNameTable() {
         lua.script_file(filename);
         std::cout << "\n   - Load NameTable [" << value << "]";
         sol::table nametableLua = lua.get_or<sol::table>("nametable_" + std::string{ value.data() }, sol::nil);
-        auto nametable = this->loadNameTableFromConfig(nametableLua);
+        auto nametable = this->loadNameTableFromConfig(&nametableLua);
 
         if (nametable.has_value()) _nameTables.emplace(nametable.value()->id, nametable.value());
     }
 
 }
 
-void TableManager::loadNameTable(std::string assetId) {
+void TableManager::loadNameTable(std::string_view assetId) {
 
 }
 
@@ -81,7 +80,7 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
     std::string line;
     while (getline(input_stream, line)) {
         if (line.at(0) == NAME_TABLE_LAYER_SEPARATOR) {
-            std::cout << "\n<<< TableManager - NameTable [" << id << "] loaded (" << row << ") rows from layer (" << layer << ") >>>";
+            std::cout << "\n<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded from layer (" << layer << ") >>>";
             if (lineNumber > 0) layer++;
             row = 0;
 
@@ -102,7 +101,7 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
         lineNumber++;
     }
 
-    std::cout << "\n<<< TableManager - NameTable [" << id << "] loaded (" << row << ") rows from layer (" << layer << ") >>>";
+    std::cout << "\n<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded from layer (" << layer << ") >>>";
     input_stream.close();
     return true;
 }
@@ -110,12 +109,12 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
 // ==========================================================
 // === Read and load Lua Configuration file for NameTable ===
 // ==========================================================
-std::optional<NameTable*> TableManager::loadNameTableFromConfig(sol::table luaNameTable) {
+std::optional<NameTable*> TableManager::loadNameTableFromConfig(sol::table *luaNameTable) {
 
-    std::string_view id = luaNameTable.get_or<std::string_view>("id", "");
-    std::string_view filename = luaNameTable.get_or<std::string_view>("filename", "");
-    sol::table luaMapping = luaNameTable.get_or<sol::table>("mapping", sol::nil);
-    sol::table luaResolution = luaNameTable.get_or<sol::table>("resolution", sol::nil);
+    std::string_view id = luaNameTable->get_or<std::string_view>("id", "");
+    std::string_view filename = luaNameTable->get_or<std::string_view>("filename", "");
+    sol::table luaMapping = luaNameTable->get_or<sol::table>("mapping", sol::nil);
+    sol::table luaResolution = luaNameTable->get_or<sol::table>("resolution", sol::nil);
 
     if (id.empty() || filename.empty() || luaResolution == sol::nil || luaResolution.empty()) {
         std::cout << "\n<<< TableManager - NameTable  [" << id << "] will not be generated :  Id, Filename and Resolution attribute are mandatory for NameTable object >>>";
@@ -157,11 +156,11 @@ void TableManager::loadCommonPatternTable() {
 
 }
 
-void TableManager::loadPatternTable(std::string assetId) {
+void TableManager::loadPatternTable(std::string_view assetId) {
 
 }
 
-std::optional<PatternTable*> TableManager::loadPatternTableFromConfig(sol::table luaPatternTable) {
+std::optional<PatternTable*> TableManager::loadPatternTableFromConfig(sol::table *luaPatternTable) {
     return std::nullopt;
 }
 

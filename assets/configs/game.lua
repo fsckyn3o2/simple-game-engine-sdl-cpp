@@ -3,7 +3,7 @@ gameConfig = {
     debug = {
         active = 1,
         fontSize = 14,
-        alignment = "BOTTOM_RIGHT",
+        alignment = "TOP_LEFT",
         maxWidth = 400,
         maxHeight = 400,
         lineHeight = 15,
@@ -22,11 +22,12 @@ gameConfig = {
         active = 1,
         renderInterval = 200,
         plugins = {
-            "MOUSE", "SCREEN"
+           "SCREEN",
+           "MOUSE"
         },
         configs = {
             MOUSE = { graphicId = "cursor_unicorn_1" },
-            SCREEN = { numberScreens = "1", files = "title" }
+            SCREEN = { numberScreens = "1", files = "intro" }
         }
     }
 }

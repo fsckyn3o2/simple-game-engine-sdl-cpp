@@ -17,7 +17,7 @@ private:
     GameConfigPlugin *pluginConfig;
 public:
     BeanManager * beanManager;
-    PluginRenderer(BeanManager *_beanManager);
+    explicit PluginRenderer(BeanManager *_beanManager);
 
     void init() override;
     void render() override;

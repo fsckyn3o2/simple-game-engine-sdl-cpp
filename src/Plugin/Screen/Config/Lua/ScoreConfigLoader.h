@@ -1,7 +1,7 @@
 #ifndef SIMPLEGAMEENGINE_SCORECONFIGLOADER_H
 #define SIMPLEGAMEENGINE_SCORECONFIGLOADER_H
 
-#include <Screen/Config/ScoreConfig.h>
+#include "Plugin/Screen/Config/ScoreConfig.h"
 
 class ScoreConfigLoader {
 public:

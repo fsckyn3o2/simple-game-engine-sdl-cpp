@@ -1,7 +1,7 @@
 #ifndef SIMPLEGAMEENGINE_INTROCONFIGLOADER_H
 #define SIMPLEGAMEENGINE_INTROCONFIGLOADER_H
 
-#include <Screen/Config/IntroConfig.h>
+#include "Plugin/Screen/Config/IntroConfig.h"
 
 class IntroConfigLoader {
 public:

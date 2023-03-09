@@ -9,6 +9,7 @@
 #include <Core/ConfigManager.h>
 #include <Plugin/Debug/DebugKeyEvent.h>
 #include <Plugin/Controller/MousePlugin.h>
+#include <Plugin/Screen/ScreenPlugin.h>
 
 LayerPlugin* PluginManager::loadLayerPlugin(LayerTable* layerInstance) {
     if ( layerInstance->type == PLUGIN_LAYER_ANIMATION) {
@@ -28,9 +29,15 @@ std::optional<DebugPlugin*> PluginManager::loadDebugPlugin(std::string_view name
 std::optional<Plugin *> PluginManager::loadPlugin(std::string_view name) {
     if (name == PLUGIN_MOUSE) {
         if (beanManager->configManager()->game()->pluginConfig()->configs.contains(PLUGIN_MOUSE)) {
-            return std::optional { new MousePlugin(beanManager->configManager()->game()->pluginConfig()->configs.at(PLUGIN_MOUSE))  };
+            return std::optional{new MousePlugin(beanManager->configManager()->game()->pluginConfig()->configs.at(PLUGIN_MOUSE))};
         } else {
-            return std::optional { new MousePlugin() };
+            return std::optional{new MousePlugin()};
+        }
+    } else if (name == PLUGIN_SCREEN) {
+        if (beanManager->configManager()->game()->pluginConfig()->configs.contains(PLUGIN_SCREEN)) {
+            return std::optional{new ScreenPlugin(beanManager->configManager()->game()->pluginConfig()->configs.at(PLUGIN_SCREEN))};
+        } else {
+            return std::optional{new ScreenPlugin()};
         }
     } else {
         return std::nullopt;

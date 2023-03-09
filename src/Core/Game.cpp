@@ -49,6 +49,23 @@ int Game::processEvent(void *game, SDL_Event * event) {
  */
 void Game::initialize() {
 
+    if (beans->configManager()->game()->pluginIsActive()) {
+        plugin = new PluginRenderer(beans);
+
+        std::cout << "- Load plugins : " << std::endl;
+        for (const auto &item : beans->configManager()->game()->pluginConfig()->plugins) {
+            auto pluginOpt = beans->pluginManager()->loadPlugin(item);
+            if (pluginOpt.has_value()) {
+                plugin->addPlugin(pluginOpt.value());
+                std::cout << "  - " << item << " :  Loaded" << std::endl;
+            } else {
+                std::cout << "  - " << item << " :  Plugin an error occurred during loading !" << std::endl;
+            }
+        }
+        std::cout << std::endl;
+        plugin->init();
+    }
+
     if (beans->configManager()->game()->debugIsActive()){
         debug = new DebugRenderer(beans);
 
@@ -64,24 +81,6 @@ void Game::initialize() {
         }
         std::cout << std::endl;
         debug->init();
-    }
-
-    if (beans->configManager()->game()->pluginIsActive()) {
-        plugin = new PluginRenderer(beans);
-
-        std::cout << "- Load plugins : " << std::endl;
-        for (const auto &item : beans->configManager()->game()->pluginConfig()->plugins) {
-            auto pluginOpt = beans->pluginManager()->loadPlugin(item);
-            if (pluginOpt.has_value()) {
-                plugin->addPlugin(pluginOpt.value());
-                std::cout << "  - " << item << " :  Loaded" << std::endl;
-            } else {
-                std::cout << "  - " << item << " :  Error during plugin loading..." << std::endl;
-            }
-        }
-        std::cout << std::endl;
-
-        plugin->init();
     }
 
     SDL_PumpEvents();

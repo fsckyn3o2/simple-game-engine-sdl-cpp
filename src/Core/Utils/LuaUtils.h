@@ -6,8 +6,6 @@
 class LuaUtils {
 public:
     static void resetLua() {
-        std::cout << "\n- Load LUA engine\n";
-
         sol::state _lua;
         std::destroy(_lua.begin(), _lua.end());
         _lua.clear_package_loaders();

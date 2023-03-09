@@ -1,4 +1,4 @@
-#include <Screen/Title/ScreenTitle.h>
+#include "ScreenTitle.h"
 
 #include <Core/BeanManager.h>
 #include <Core/TableManager.h>

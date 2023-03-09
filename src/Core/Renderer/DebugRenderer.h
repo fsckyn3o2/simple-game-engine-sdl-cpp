@@ -59,11 +59,11 @@ private:
     GameConfigDebug *debugConfig;
     Pos position = Pos{0, 0};
     DebugBoxing *debugBoxing{};
-    WorkerPosition *lineIterator;
+    WorkerPosition *lineIterator{};
     bool autoScrolling = false;
     void println(const char *message, SDL_Rect *currentLineBox);
 public:
-    DebugRenderer(BeanManager *_beanManager);
+    explicit DebugRenderer(BeanManager *_beanManager);
 
     void init() override;
     void render() override;

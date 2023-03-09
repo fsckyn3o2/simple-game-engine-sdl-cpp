@@ -83,7 +83,7 @@ void BeanManager::initialize() {
     SDL_ShowCursor(1);
 
     LuaUtils::unloadLua();
-    std::cout << "\nGame initialized!" << std::endl;
+    std::cout << "\n\n///-- Game configuration loaded! --///\n" << std::endl;
 }
 
 SDL_Window* BeanManager::createWindow() {

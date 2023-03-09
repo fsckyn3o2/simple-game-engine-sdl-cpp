@@ -4,6 +4,7 @@
 #include <Core/Config/GameConfig.h>
 #include <Core/Utils/LuaUtils.h>
 #include <Core/Config/Lua/PluginConfigLoader.h>
+#include <Core/Config/Lua/LuaMapper.h>
 
 class GameConfigLoader {
 public:

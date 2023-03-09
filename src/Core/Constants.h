@@ -31,5 +31,6 @@
 // Plugin name :
 #define PLUGIN_DEBUG_KEY_EVENT  "DEBUG_KEY_EVENT"
 #define PLUGIN_MOUSE            "MOUSE"
+#define PLUGIN_SCREEN           "SCREEN"
 
 #endif // SIMPLE_GAME_ENGINE_CONSTANT_H

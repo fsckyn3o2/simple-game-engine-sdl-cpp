@@ -1,7 +1,3 @@
-#include <Screen/ScreenPlugin.h>
-#include <Core/Renderer/PluginRenderer.h>
-#include <Core/Config/PluginConfig.h>
-
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -9,28 +5,35 @@
 #include <vector>
 #include <Core/Constants.h>
 #include <Core/Utils/StringUtils.h>
-#include <Screen/ScreenLoader.h>
+
+#include <Core/Renderer/PluginRenderer.h>
+#include <Core/Config/PluginConfig.h>
+
+#include <Plugin/Screen/ScreenPlugin.h>
+#include <Plugin/Screen/ScreenLoader.h>
 
 void ScreenPlugin::init(PluginRenderer *renderer) {
 
-    std::string_view files = config->getValue("files").value();
-    std::string delimiter = ",";
+    std::cout << "\n  - SCREEN : initialization...";
+
+    std::string files = std::string(config->getValue("files").value());
+    char delimiter = ',';
 
     std::vector<std::string> screenFiles;
-    while(files.find_first_of(delimiter) > 0) {
-         screenFiles.emplace_back( StringUtils::trim(files.substr(0, files.find_first_of(delimiter) + 1)) );
+    while(files.find_first_of(delimiter) != std::string::npos) {
+         screenFiles.emplace_back( StringUtils::trim_copy(files.substr(0, files.find_first_of(delimiter) + 1)) );
          files = files.substr(files.find_first_of(delimiter) + 1);
     }
-    screenFiles.emplace_back(StringUtils::trim(files));
+    screenFiles.emplace_back(StringUtils::trim_copy(files));
 
-    for (const auto &fileName : screenFiles) {
-        std::filesystem::path filePath(SCREEN_ASSET_ROOT_DIR + fileName + ".lua");
+    for (const auto &filename : screenFiles) {
+        std::filesystem::path filePath(SCREEN_ASSET_ROOT_DIR + filename + ".lua");
         if (std::filesystem::exists(filePath)) {
-            std::cout << "<< Load screen file [ " << SCREEN_ASSET_ROOT_DIR + fileName + ".lua ]";
+            std::cout << "\n<< Load screen file [ " << SCREEN_ASSET_ROOT_DIR + filename + ".lua ]";
             auto *screen = ScreenLoader::load(renderer->beanManager, std::filesystem::absolute(filePath));
             screens.emplace( screen->getId(), screen);
         } else {
-            std::cout << "<< Error screen file not found [ " << SCREEN_ASSET_ROOT_DIR + fileName + ".lua ]";
+            std::cout << "\n<< Error screen file not found [ " << SCREEN_ASSET_ROOT_DIR + filename + ".lua ]";
         }
     }
 }

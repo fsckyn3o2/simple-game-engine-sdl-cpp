@@ -3,16 +3,16 @@
 
 #include <filesystem>
 #include <sol/sol.hpp>
-#include <Screen/Intro/ScreenIntro.h>
-#include <Screen/Title/ScreenTitle.h>
-#include <Screen/Score/ScreenScore.h>
-#include <Screen/Options/ScreenOptions.h>
-#include <Screen/Config/ScreenConfig.h>
-#include <Screen/Config/IntroConfig.h>
-#include <Screen/Config/Lua/IntroConfigLoader.h>
-#include <Screen/Config/Lua/TitleConfigLoader.h>
-#include <Screen/Config/Lua/ScoreConfigLoader.h>
-#include <Screen/Config/Lua/OptionsConfigLoader.h>
+#include <Plugin/Screen/Intro/ScreenIntro.h>
+#include <Plugin/Screen/Title/ScreenTitle.h>
+#include <Plugin/Screen/Score/ScreenScore.h>
+#include <Plugin/Screen/Options/ScreenOptions.h>
+#include <Plugin/Screen/Config/ScreenConfig.h>
+#include <Plugin/Screen/Config/IntroConfig.h>
+#include <Plugin/Screen/Config/Lua/IntroConfigLoader.h>
+#include <Plugin/Screen/Config/Lua/TitleConfigLoader.h>
+#include <Plugin/Screen/Config/Lua/ScoreConfigLoader.h>
+#include <Plugin/Screen/Config/Lua/OptionsConfigLoader.h>
 
 class ScreenLoader {
 public:

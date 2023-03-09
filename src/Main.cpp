@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Core/BeanManager.h"
-#include "Core/Game.h"
+#include <Core/BeanManager.h>
+#include <Core/Game.h>
 
 /**
  * Load engine before start it.
@@ -11,7 +11,7 @@
  */
 int main(int argc, char *argv[]) {
 
-    BeanManager* beanManager = new BeanManager();
+    auto* beanManager = new BeanManager();
     beanManager->initialize();
     // beanManager->runTest();
 

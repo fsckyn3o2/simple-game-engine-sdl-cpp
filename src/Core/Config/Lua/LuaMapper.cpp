@@ -28,10 +28,10 @@ std::optional<GraphicAssetReference*> LuaMapper::loadGraphicAssetReference(const
     // example :: name = 'menu_start', graphic = 'menu', alignment = {x = 0, y = 0, z = 0}, value = 10
     std::string_view name = luaTable.get_or<std::string_view>("name", ""); // Name of this reference.
     std::string_view graph = luaTable.get_or<std::string_view>("graphic", ""); // ID of GraphicAsset.
-    sol::table position = luaTable.get_or<sol::table>("alignment", sol::nil);   // ALIGNMENT Inside GraphicAsset.
+    sol::table position = luaTable.get_or<sol::table>("position", sol::nil);   // Position Inside GraphicAsset.
 
     if (name.empty() || graph.empty() || position == sol::nil) {
-        std::cout << "\nLuaMapper - loadGraphicAssetReference :: name, graph, alignment are required";
+        std::cout << "\nLuaMapper - loadGraphicAssetReference :: name, graph, position are required";
         return std::nullopt;
     }
 

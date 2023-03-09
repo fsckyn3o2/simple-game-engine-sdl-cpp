@@ -20,8 +20,8 @@ private:
     std::map<std::string, NameTable*> _nameTables;
     std::map<std::string, PatternTable*> _patternTables;
 
-    std::optional<NameTable*> loadNameTableFromConfig(sol::table luaNameTable);
-    std::optional<PatternTable*> loadPatternTableFromConfig(sol::table luaPatternTable);
+    std::optional<NameTable*> loadNameTableFromConfig(sol::table *luaNameTable);
+    std::optional<PatternTable*> loadPatternTableFromConfig(sol::table *luaPatternTable);
     BeanManager* beanManager;
 public:
     TableManager(BeanManager* _beanManager) : beanManager(_beanManager) { };
@@ -32,11 +32,11 @@ public:
     bool readNameTableFile(std::string_view filename, std::string_view id, NameTable *nameTable);
 
     void loadCommonNameTable();
-    void loadNameTable(std::string assetId);
+    void loadNameTable(std::string_view assetId);
 
 
     void loadCommonPatternTable();
-    void loadPatternTable(std::string assetId);
+    void loadPatternTable(std::string_view assetId);
 };
 
 

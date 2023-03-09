@@ -1,16 +1,20 @@
 -- Common resources are loaded by default
 titleScreen = {
-    graphics = {},
-    nametables = {},
+    graphics = {
+        "logo_engine"
+    },
+    nametables = {
+        "title"
+    },
     sounds = {},
     config = {
-        font = '',
-        sound = {
-            next = '',
-            previous = '',
-            validation = '',
-            quit = '',
-            start = ''
-        },
+        --font = 'DejaVu',
+        --sound = {
+        --    next = '',
+        --    previous = '',
+        --    validation = '',
+        --    quit = '',
+        --    start = ''
+        --},
     }
 }

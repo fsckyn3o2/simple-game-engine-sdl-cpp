@@ -17,7 +17,7 @@ public:
 
     virtual void init(PluginRenderer* renderer) = 0;
     virtual void updateAndRender(PluginRenderer* renderer) = 0;
-    bool isActive() const { return active; };
+    [[nodiscard]] bool isActive() const { return active; };
 };
 
 #endif //SIMPLEGAMEENGINE_PLUGIN_H

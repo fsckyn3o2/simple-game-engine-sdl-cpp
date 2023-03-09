@@ -1,7 +1,7 @@
 #ifndef SIMPLEGAMEENGINE_OPTIONSCONFIGLOADER_H
 #define SIMPLEGAMEENGINE_OPTIONSCONFIGLOADER_H
 
-#include <Screen/Config/OptionsConfig.h>
+#include "Plugin/Screen/Config/OptionsConfig.h"
 
 class OptionsConfigLoader {
 public:

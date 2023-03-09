@@ -33,6 +33,9 @@ PluginRenderer::PluginRenderer(BeanManager* _beanManager): Renderer(), beanManag
 }
 
 void PluginRenderer::init() {
+
+    std::cout << "\n- Initialize plugins :";
+
     for (auto* plugin : plugins) {
         if (plugin->isActive()) {
             plugin->init(this);

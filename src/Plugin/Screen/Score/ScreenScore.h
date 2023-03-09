@@ -2,7 +2,7 @@
 #define SIMPLEGAMEENGINE_SCREENSCORE_H
 
 #include <Core/Renderer/ScreenRenderer.h>
-#include <Screen/Config/ScoreConfig.h>
+#include <Plugin/Screen/Config/ScoreConfig.h>
 
 class ScreenScore : public ScreenRenderer {
 private:

@@ -2,7 +2,7 @@
 #define SIMPLEGAMEENGINE_SCREENOPTIONS_H
 
 #include <Core/Renderer/ScreenRenderer.h>
-#include <Screen/Config/OptionsConfig.h>
+#include "Plugin/Screen/Config/OptionsConfig.h"
 
 class ScreenOptions : public ScreenRenderer {
 private:

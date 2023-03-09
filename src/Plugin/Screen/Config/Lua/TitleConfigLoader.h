@@ -1,7 +1,7 @@
 #ifndef SIMPLEGAMEENGINE_TITLECONFIGLOADER_H
 #define SIMPLEGAMEENGINE_TITLECONFIGLOADER_H
 
-#include <Screen/Config/TitleConfig.h>
+#include "Plugin/Screen/Config/TitleConfig.h"
 
 class TitleConfigLoader {
 public:

@@ -1,7 +1,7 @@
 #ifndef SIMPLEGAMEENGINE_SCREENINTRO_H
 #define SIMPLEGAMEENGINE_SCREENINTRO_H
 
-#include <Screen/Config/IntroConfig.h>
+#include <Plugin/Screen/Config/IntroConfig.h>
 #include <Core/Renderer/ScreenRenderer.h>
 
 class ScreenIntro: public ScreenRenderer {

@@ -8,10 +8,10 @@ class ScreenRenderer;
 class PluginConfig;
 
 
-class ScreenPlugin : Plugin {
+class ScreenPlugin : public Plugin {
 private:
     std::map<std::string, ScreenRenderer*> screens;
-    ScreenRenderer *currentScreen;
+    ScreenRenderer *currentScreen{};
 public:
     explicit ScreenPlugin(PluginConfig* _config) : Plugin(_config) {
         active = true;

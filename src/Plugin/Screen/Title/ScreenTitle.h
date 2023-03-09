@@ -2,8 +2,8 @@
 #define SIMPLE_GAME_ENGINE_TITLE_H
 
 #include <Core/Renderer/ScreenRenderer.h>
-#include <Screen/Config/ScreenConfig.h>
-#include <Screen/Config/TitleConfig.h>
+#include <Plugin/Screen/Config/ScreenConfig.h>
+#include <Plugin/Screen/Config/TitleConfig.h>
 
 class BeanManager;
 class NameTable;
@@ -11,7 +11,7 @@ class NameTable;
 class ScreenTitle : public ScreenRenderer {
 private:
     TitleConfig *config;
-    NameTable* nameTable;
+    NameTable* nameTable{};
 public:
     ScreenTitle(BeanManager* _beanManager, TitleConfig *_config): ScreenRenderer(_beanManager), config(_config) {
         id = _config->id;

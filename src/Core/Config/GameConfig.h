@@ -8,6 +8,7 @@ class Plugin;
 #include <string_view>
 #include <Core/Config/PluginConfig.h>
 #include <Core/Utils/Color.h>
+#include <vector>
 
 class GameConfigDebug {
 public:
@@ -113,11 +114,11 @@ public:
         return _title;
     }
 
-    bool pluginIsActive() {
+    [[nodiscard]] bool pluginIsActive() const {
         return plugin.isActive;
     }
 
-    bool debugIsActive() {
+    [[nodiscard]] bool debugIsActive() const {
         return debug.isActive;
     }
 

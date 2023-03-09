@@ -29,7 +29,7 @@ enum class InputDevice {
  */
 class InputAsset {
 public:
-    InputAsset(std::string_view _id): id(_id) { };
+    explicit InputAsset(std::string_view _id): id(_id) { };
     const std::string id;
 
     /**

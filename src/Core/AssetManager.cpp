@@ -114,7 +114,7 @@ void AssetManager::loadCommonSounds() {
     sounds.for_each([&](sol::object const& key, sol::object const& value) {
         auto sound = this->loadSoundAsset(value.as<sol::table>());
         if (sound.has_value()) {
-            std::cout << "\n   - SoundAsset [" << sound.value()->id << "] loaded";
+            std::cout << "\n-- SoundAsset [" << sound.value()->id << "] loaded";
         }
     });
 

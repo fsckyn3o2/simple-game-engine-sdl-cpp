@@ -68,19 +68,24 @@ fonts = {
                 filename = "common/PixelOperator.ttf"
             },
             {
-                id = "PixelOperator8",
-                type = {"SANS"},
-                filename = "common/PixelOperator8.ttf"
-            },
-            {
-                id = "PixelOperator8Bold",
-                type = {"SANS", "BOLD"},
-                filename = "common/PixelOperator8-Bold.ttf"
-            },
-            {
                 id = "PixelOperatorMono",
                 type = {"SANS", "MONO"},
                 filename = "common/PixelOperatorMono.ttf"
+            },
+            {
+                id = "PixelOperatorMonoBold",
+                type = {"SANS", "MONO", "BOLD"},
+                filename = "common/PixelOperatorMono-Bold.ttf"
+            }
+        }
+    },
+    {
+        id = "PixelOperator8",
+        files = {
+            {
+                id = "PixelOperator8",
+                type = {"SANS"},
+                filename = "common/PixelOperator8.ttf"
             },
             {
                 id = "PixelOperatorMono8",
@@ -88,14 +93,14 @@ fonts = {
                 filename = "common/PixelOperatorMono8.ttf"
             },
             {
+                id = "PixelOperator8Bold",
+                type = {"SANS", "BOLD"},
+                filename = "common/PixelOperator8-Bold.ttf"
+            },
+            {
                 id = "PixelOperatorMono8Bold",
                 type = {"SANS", "MONO", "BOLD"},
                 filename = "common/PixelOperatorMono8-Bold.ttf"
-            },
-            {
-                id = "PixelOperatorMonoBold",
-                type = {"SANS", "MONO", "BOLD"},
-                filename = "common/PixelOperatorMono-Bold.ttf"
             }
         }
     }

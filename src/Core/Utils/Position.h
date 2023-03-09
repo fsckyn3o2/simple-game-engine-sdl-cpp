@@ -14,19 +14,26 @@ public:
 
     Pos(int _x, int _y) : x(_x), y(_y) { }
 
-    Pos offset(int oX, int oY) const {
+    [[nodiscard]] Pos offset(int oX, int oY) const {
         return Pos{x + oX, y + oY};
     }
 
     bool operator==(Pos* other) const { return x == other->x && y == other->y; }
     bool operator==(Pos other) const { return x == other.x && y == other.y; }
 
-    bool operator!=(Pos* other) const { return x != other->x || y != other->y; }
-    bool operator<(Pos* other) const { return x < other->x && y < other->y; }
-    bool operator<=(Pos* other) const { return x <= other->x && y <= other->y; }
-    bool operator>=(Pos* other) const { return x >= other->x || y >= other->y; }
-    bool operator>(Pos* other) const { return x >= other->x || y >= other->y; }
+    bool operator!=(Pos* other) const { return (x != other->x) || (y != other->y); }
+    bool operator<(Pos* other) const { return (x < other->x) && (y < other->y); }
+    bool operator<=(Pos* other) const { return (x <= other->x) && (y <= other->y); }
+    bool operator>=(Pos* other) const { return (x >= other->x) || (y >= other->y); }
+    bool operator>(Pos* other) const { return (x > other->x) || (y > other->y); }
 
+    bool operator!=(Pos other) const { return (x != other.x) || (y != other.y); }
+    bool operator<(Pos other) const { return (x < other.x) && (y < other.y); }
+    bool operator<=(Pos other) const { return (x <= other.x) && (y <= other.y); }
+    bool operator>=(Pos other) const { return (x >= other.x) || (y >= other.y); }
+    bool operator>(Pos other) const { return (x > other.x) || (y > other.y); }
+
+    Pos* operator+() const { return new Pos(abs(x), abs(y)); }
     Pos* operator+(Pos* other) const { return new Pos(x+other->x, y+other->y); }
     Pos operator+(Pos other) const { return Pos{x+other.x, y+other.y}; }
 
@@ -35,6 +42,7 @@ public:
     Pos operator-(Pos other) const { return Pos{x-other.x, y-other.y}; }
 
     Pos operator*(int factor) const { return Pos{ x*factor, y*factor}; }
+    Pos operator*(Pos other) const { return Pos{ x*other.x, y*other.y}; }
 };
 
 class Position : public Pos {

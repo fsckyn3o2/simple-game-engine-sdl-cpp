@@ -133,16 +133,16 @@ void DebugRenderer::init() {
             position.y = 0;
             break;
         case GameConfigDebug::TOP_RIGHT:
-            position.x = beanManager->configManager()->video()->resolution()->width - debugConfig->maxWidth;
+            position.x = (int) (beanManager->configManager()->video()->resolution()->width - debugConfig->maxWidth);
             position.y = 0;
             break;
         case GameConfigDebug::BOTTOM_LEFT:
             position.x = 0;
-            position.y = beanManager->configManager()->video()->resolution()->height - debugConfig->maxHeight;
+            position.y = (int) (beanManager->configManager()->video()->resolution()->height - debugConfig->maxHeight);
             break;
         case GameConfigDebug::BOTTOM_RIGHT:
-            position.x = beanManager->configManager()->video()->resolution()->width - debugConfig->maxWidth;
-            position.y = beanManager->configManager()->video()->resolution()->height - debugConfig->maxHeight;
+            position.x = (int) (beanManager->configManager()->video()->resolution()->width - debugConfig->maxWidth);
+            position.y = (int) (beanManager->configManager()->video()->resolution()->height - debugConfig->maxHeight);
             break;
     }
 

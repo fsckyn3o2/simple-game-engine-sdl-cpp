@@ -21,7 +21,7 @@ class LayerTable;
 
 class AnimationLayerPlugin : public virtual LayerPlugin {
 public:
-    AnimationLayerPlugin(BeanManager* _beanManager, LayerTable* _layer);
+    AnimationLayerPlugin(BeanManager *_beanManager, LayerTable *_layer) : LayerPlugin(_beanManager, _layer) {};
 
     void init() override;
     void update() override;
@@ -43,7 +43,7 @@ public:
         return finished;
     };
 
-    virtual std::string_view id() {
+    std::string_view id() override {
         return PLUGIN_LAYER_ANIMATION;
     };
 
@@ -56,9 +56,9 @@ private:
     bool finished = false;
     unsigned int delayLayer{};
 
-    LayerTable* layer;
-    unsigned int delayIndex;
-    unsigned int readDirIndex;
+    LayerTable* layer{};
+    unsigned int delayIndex{};
+    unsigned int readDirIndex{};
     unsigned int loopIndex = 0;
     unsigned int frameIndex = 0;
     unsigned int animationLength = 0;

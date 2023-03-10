@@ -38,7 +38,7 @@ public:
         ) {
             _resolution = new VideoResolution(width, height);
         } else {
-            std::cout << "\n <<< Resolution is not supported by this engine : " << width << "/" << height << " >>>";
+            std::cout << std::endl << " <<< Resolution is not supported by this engine : " << width << "/" << height << " >>>";
         }
         return this;
     }

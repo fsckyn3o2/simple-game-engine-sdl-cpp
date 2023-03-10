@@ -52,7 +52,7 @@ void Game::initialize() {
     if (beans->configManager()->game()->pluginIsActive()) {
         plugin = new PluginRenderer(beans);
 
-        std::cout << "- Load plugins : " << std::endl;
+        std::cout << std::endl << "- Load plugins : " << std::endl;
         for (const auto &item : beans->configManager()->game()->pluginConfig()->plugins) {
             auto pluginOpt = beans->pluginManager()->loadPlugin(item);
             if (pluginOpt.has_value()) {
@@ -62,14 +62,13 @@ void Game::initialize() {
                 std::cout << "  - " << item << " :  Plugin an error occurred during loading !" << std::endl;
             }
         }
-        std::cout << std::endl;
         plugin->init();
     }
 
     if (beans->configManager()->game()->debugIsActive()){
         debug = new DebugRenderer(beans);
 
-        std::cout << "- Load debug plugins : " << std::endl;
+        std::cout << std::endl << std::endl << "- Load debug plugins : " << std::endl;
         for (const auto &item : beans->configManager()->game()->debugConfig()->plugins) {
             auto debugPlugin = beans->pluginManager()->loadDebugPlugin(item);
             if (debugPlugin.has_value()) {
@@ -87,7 +86,7 @@ void Game::initialize() {
 }
 
 void Game::start() {
-    std::cout << "\nGame started!\n";
+    std::cout << std::endl << "Game started!" << std::endl;
 
     while(isRunning) {
         update();
@@ -98,7 +97,7 @@ void Game::start() {
         SDL_Delay(5);
     }
 
-    std::cout << "\nGame stopped!\n";
+    std::cout << std::endl << "Game stopped!" << std::endl;
 }
 
 /**
@@ -124,5 +123,5 @@ void Game::clean() {
     beans->destroyWindow();
     beans->destroyAllRenderer();
     SDL_Quit();
-    std::cout << "Game cleaned\n";
+    std::cout << "Game cleaned" << std::endl;
 }

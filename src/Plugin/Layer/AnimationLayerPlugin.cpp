@@ -6,10 +6,6 @@
 #include <Core/Table/NameTable.h>
 #include <Core/BeanManager.h>
 
-AnimationLayerPlugin::AnimationLayerPlugin(BeanManager *_beanManager, LayerTable *_layer) : LayerPlugin(_beanManager, _layer) {
-
-}
-
 /**
  * Initialize AnimationLayerPlugin for first picture
  */

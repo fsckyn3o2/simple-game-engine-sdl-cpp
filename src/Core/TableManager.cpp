@@ -12,16 +12,16 @@
 
 
 void TableManager::loadCommonNameTable() {
-    std::cout << "\n- Load Common NameTable";
+    std::cout << std::endl << "- Load Common NameTable";
 
     std::filesystem::path filePath(std::string(NAMETABLE_ASSET_ROOT_DIR) + "common/index.lua");
     if (!std::filesystem::exists(filePath)) {
-        std::cout << "\n<<< AssetManager - CommonNameTable index file not found [" << std::string(NAMETABLE_ASSET_ROOT_DIR) << "common/index.lua] >>>";
+        std::cout << std::endl << "<<< AssetManager - CommonNameTable index file not found [" << std::string(NAMETABLE_ASSET_ROOT_DIR) << "common/index.lua] >>>";
         return ;
     }
 
     sol::state lua;
-    lua.script_file(std::string(NAMETABLE_ASSET_ROOT_DIR) + "common/index.lua");
+    lua.script_file(filePath);
     sol::table nametables = lua["nametables"];
 
     std::vector<std::string> idOfNameTables;
@@ -37,12 +37,12 @@ void TableManager::loadCommonNameTable() {
         const std::string filename = std::string(NAMETABLE_ASSET_ROOT_DIR) + "common/" + value + ".lua";
         std::filesystem::path filePathNametable(filename);
         if (!std::filesystem::exists(filePathNametable)) {
-            std::cout << "\n<<< AssetManager - CommonNameTable config file not found [" << filename << "] >>>";
+            std::cout << std::endl << "<<< AssetManager - CommonNameTable config file not found [" << filename << "] >>>";
             return ;
         }
 
         lua.script_file(filename);
-        std::cout << "\n   - Load NameTable [" << value << "]";
+        std::cout << std::endl << "   - Load NameTable [" << value << "]";
         sol::table nametableLua = lua.get_or<sol::table>("nametable_" + std::string{ value.data() }, sol::nil);
         auto nametable = this->loadNameTableFromConfig(&nametableLua);
 
@@ -52,7 +52,23 @@ void TableManager::loadCommonNameTable() {
 }
 
 void TableManager::loadNameTable(std::string_view assetId) {
+    std::cout << std::endl << "- Load NamTable - " << assetId;
 
+    std::filesystem::path filePath(std::string(NAMETABLE_ASSET_ROOT_DIR) + assetId.data() + "/index.lua");
+    if (!std::filesystem::exists(filePath)) {
+        std::cout << std::endl << "<<< AssetManager - " << assetId << "NameTable config file not found [" << std::string(NAMETABLE_ASSET_ROOT_DIR) <<  assetId.data() << "/index.lua] >>>";
+        return ;
+    } else {
+
+        sol::state lua;
+        lua.script_file(filePath);
+        LuaUtils::resetLua();
+        std::cout << std::endl << "   - Load NameTable [" << assetId.data() << "]";
+        sol::table nametableLua = lua.get_or<sol::table>("nametable_" + std::string{assetId.data()}, sol::nil);
+        auto nametable = this->loadNameTableFromConfig(&nametableLua);
+
+        if (nametable.has_value()) _nameTables.emplace(nametable.value()->id, nametable.value());
+    }
 }
 
 // ====================================
@@ -65,7 +81,7 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
 
     std::filesystem::path filePath(filepathStr);
     if (!std::filesystem::exists(filePath)) {
-        std::cout << "\n<<< TableManager - NameTable [" << id << "] will not be generated : '" << filename << "' not found >>>";
+        std::cout << std::endl << "<<< TableManager - NameTable [" << id << "] will not be generated : '" << filename << "' not found >>>";
         return false;
     }
 
@@ -80,14 +96,17 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
     std::string line;
     while (getline(input_stream, line)) {
         if (line.at(0) == NAME_TABLE_LAYER_SEPARATOR) {
-            std::cout << "\n<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded from layer (" << layer << ") >>>";
             if (lineNumber > 0) layer++;
             row = 0;
+
+            std::cout << std::endl << "<<< TableManager - NameTable [" << id << "] load layer (" << layer << ") ";
 
             auto* layerInstance = LayerTableLoader::loadFromNameTable(layer, std::string_view(line).substr(1), nameTable);
             layerInstance->plugin(beanManager->pluginManager()->loadLayerPlugin(layerInstance));
 
             nameTable->layers.emplace(layer, layerInstance);
+
+            std::cout << " >>>";
 
         } else {
             // Default value of layer if nothing defined in first line of nametable.
@@ -101,7 +120,7 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
         lineNumber++;
     }
 
-    std::cout << "\n<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded from layer (" << layer << ") >>>";
+    std::cout << std::endl << "<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded from layer (" << layer << ") >>>";
     input_stream.close();
     return true;
 }
@@ -117,12 +136,12 @@ std::optional<NameTable*> TableManager::loadNameTableFromConfig(sol::table *luaN
     sol::table luaResolution = luaNameTable->get_or<sol::table>("resolution", sol::nil);
 
     if (id.empty() || filename.empty() || luaResolution == sol::nil || luaResolution.empty()) {
-        std::cout << "\n<<< TableManager - NameTable  [" << id << "] will not be generated :  Id, Filename and Resolution attribute are mandatory for NameTable object >>>";
+        std::cout << std::endl << "<<< TableManager - NameTable  [" << id << "] will not be generated :  Id, Filename and Resolution attribute are mandatory for NameTable object >>>";
         return std::nullopt;
     }
 
     if (luaResolution["width"] == sol::nil || luaResolution["height"] == sol::nil || luaResolution["layers"] == sol::nil ) {
-        std::cout << "\n<<< TableManager - NameTable  [" << id << "] will not be generated : width, height and layers are mandatory for NameTableResolution attribute in NameTable object >>>";
+        std::cout << std::endl << "<<< TableManager - NameTable  [" << id << "] will not be generated : width, height and layers are mandatory for NameTableResolution attribute in NameTable object >>>";
         return std::nullopt;
     }
 
@@ -164,11 +183,15 @@ std::optional<PatternTable*> TableManager::loadPatternTableFromConfig(sol::table
     return std::nullopt;
 }
 
-NameTable *TableManager::nameTable(std::string id) {
-    return _nameTables.contains(id) ? _nameTables.at(id) : nullptr;
+bool TableManager::hasNameTable(std::string_view id) {
+    return _nameTables.contains(id.data());
 }
 
-PatternTable *TableManager::patternTable(std::string id) {
+NameTable* TableManager::nameTable(std::string_view id) {
+    return _nameTables.contains(id.data()) ? _nameTables.at(id.data()) : nullptr;
+}
+
+PatternTable* TableManager::patternTable(std::string id) {
     return _patternTables.contains(id) ? _patternTables.at(id) : nullptr;
 }
 

@@ -1,21 +1,29 @@
 #include <Core/PluginManager.h>
 
+#include <iostream>
 #include <Core/Plugins/Plugin.h>
 #include <Core/Plugins/DebugPlugin.h>
 #include <Core/Plugins/LayerPlugin.h>
 #include <Core/Table/LayerTable.h>
 #include <Plugin/Layer/AnimationLayerPlugin.h>
+#include <Plugin/Layer/SolidLayerPlugin.h>
 #include <Core/BeanManager.h>
 #include <Core/ConfigManager.h>
 #include <Plugin/Debug/DebugKeyEvent.h>
 #include <Plugin/Controller/MousePlugin.h>
 #include <Plugin/Screen/ScreenPlugin.h>
 
-LayerPlugin* PluginManager::loadLayerPlugin(LayerTable* layerInstance) {
-    if ( layerInstance->type == PLUGIN_LAYER_ANIMATION) {
-        return new AnimationLayerPlugin(this->beanManager, layerInstance);
+LayerPlugin* PluginManager::loadLayerPlugin(LayerTable* layerTable) {
+    if ( layerTable->type == PLUGIN_LAYER_ANIMATION) {
+        std::cout << "(" << PLUGIN_LAYER_ANIMATION << ") type detected";
+        return new AnimationLayerPlugin(this->beanManager, layerTable);
+    } else if ( layerTable->type == PLUGIN_LAYER_SOLID) {
+        std::cout << "(" << PLUGIN_LAYER_SOLID << ") type detected";
+        return new SolidLayerPlugin(this->beanManager, layerTable);
+    } else {
+        std::cout << "(" << layerTable->type << ") ERROR TYPE UNKNOWN!";
+        return nullptr;
     }
-    return nullptr;
 }
 
 std::optional<DebugPlugin*> PluginManager::loadDebugPlugin(std::string_view name) {

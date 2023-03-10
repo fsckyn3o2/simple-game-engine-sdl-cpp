@@ -99,7 +99,7 @@ public:
 
     GameConfig* setTitle(std::string_view title) {
         if (title.size() > 50) {
-            std::cout << "\n <<< GameConfig - setTitle maximum length of title is 50 >>>";
+            std::cout << std::endl << " <<< GameConfig - setTitle maximum length of title is 50 >>>";
             return this;
         }
         _title = std::string{ title };

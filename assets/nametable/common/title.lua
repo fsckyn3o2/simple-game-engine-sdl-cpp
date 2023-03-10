@@ -1,5 +1,5 @@
 nametable_title = {
-    id = 'nametable_title',
+    id = 'title',
     filename = 'common/title.nametable',
     resolution = {
         width = 1,

@@ -11,7 +11,7 @@ class LayerPlugin {
 public:
     LayerPlugin(BeanManager* _beanManager, LayerTable* _layerTable): beanManager(_beanManager), layer(_layerTable) { };
 
-    virtual ~LayerPlugin() { };
+    virtual ~LayerPlugin() = default;
 
     BeanManager* beanManager;
     LayerTable* layer;

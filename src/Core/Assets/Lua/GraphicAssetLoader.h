@@ -13,19 +13,19 @@ public:
         sol::table specConfig = luaGraph.get_or<sol::table>("config", sol::nil);
 
         if (id.empty() || filename.empty() || luaResolution == sol::nil || luaResolution.empty()) {
-            std::cout << "\n<<< AssetManager - GraphicAsset  [" << id << "] will not be generated :  Id, Filename and Resolution attribute are mandatory for GraphicAsset object >>>";
+            std::cout << std::endl << "<<< AssetManager - GraphicAsset  [" << id << "] will not be generated :  Id, Filename and Resolution attribute are mandatory for GraphicAsset object >>>";
             return std::nullopt;
         }
 
         auto resolution = LuaMapper::loadGraphicAssetResolution(luaResolution);
         if (!resolution.has_value()) {
-            std::cout << "\n<<< AssetManager - GraphicAsset  [" << id << "] will not be generated : ppu, width, height and step are mandatory for GraphicAssetResolution attribute in GraphicAsset object >>>";
+            std::cout << std::endl << "<<< AssetManager - GraphicAsset  [" << id << "] will not be generated : ppu, width, height and step are mandatory for GraphicAssetResolution attribute in GraphicAsset object >>>";
             return std::nullopt;
         }
 
         std::filesystem::path filePath(std::string(GRAPHIC_ASSET_ROOT_DIR) + filename.data());
         if (!std::filesystem::exists(filePath)) {
-            std::cout << "\n<<< AssetManager - GraphicAsset [" << id << "] will not be generated : '" << filename << "' not found >>>";
+            std::cout << std::endl << "<<< AssetManager - GraphicAsset [" << id << "] will not be generated : '" << filename << "' not found >>>";
             return std::nullopt;
         } else {
             filename = std::filesystem::absolute(filePath);

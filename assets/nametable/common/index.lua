@@ -1,4 +1,5 @@
 nametables = {
+    "intro",
     "title",
     "generic"
 }

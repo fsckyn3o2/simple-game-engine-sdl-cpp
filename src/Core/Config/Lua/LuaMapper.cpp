@@ -31,7 +31,7 @@ std::optional<GraphicAssetReference*> LuaMapper::loadGraphicAssetReference(const
     sol::table position = luaTable.get_or<sol::table>("position", sol::nil);   // Position Inside GraphicAsset.
 
     if (name.empty() || graph.empty() || position == sol::nil) {
-        std::cout << "\nLuaMapper - loadGraphicAssetReference :: name, graph, position are required";
+        std::cout << std::endl << "LuaMapper - loadGraphicAssetReference :: name, graph, position are required";
         return std::nullopt;
     }
 

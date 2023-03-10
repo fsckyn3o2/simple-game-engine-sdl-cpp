@@ -10,7 +10,7 @@ public:
         sol::table files = luaFont.get_or<sol::table>("files", sol::nil);
 
         if (id.empty() || files == sol::nil) {
-            std::cout << "\n<<< AssetManager - FontAsset [" << id << "] will not be generated : Id and Files attribute are mandatory >>>";
+            std::cout << std::endl << "<<< AssetManager - FontAsset [" << id << "] will not be generated : Id and Files attribute are mandatory >>>";
             return std::nullopt;
         }
 
@@ -22,13 +22,13 @@ public:
             std::string filename = value.get_or<std::string>("filename", "");
 
             if (_id.empty() || typeslist == sol::nil || filename.empty()) {
-                std::cout << "\n<<< AssetManager - FontAsset [" << _id << "] will not be generated : Id, Type, Filename attribute are mandatory for FondAsset object >>>";
+                std::cout << std::endl << "<<< AssetManager - FontAsset [" << _id << "] will not be generated : Id, Type, Filename attribute are mandatory for FondAsset object >>>";
                 return std::nullopt;
             }
 
             std::filesystem::path filePath( std::string(FONT_ASSET_ROOT_DIR) + filename);
             if (!std::filesystem::exists(filePath)) {
-                std::cout << "\n<<< AssetManager - FontAsset [" << _id << "] will not be generated : '" << filename << "' not found >>>";
+                std::cout << std::endl << "<<< AssetManager - FontAsset [" << _id << "] will not be generated : '" << filename << "' not found >>>";
                 return std::nullopt;
             } else {
                 filename = std::filesystem::absolute(filePath);

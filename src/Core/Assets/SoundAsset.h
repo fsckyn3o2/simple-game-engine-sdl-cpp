@@ -29,7 +29,7 @@ public:
             bool fileNotFound = false;
             bool checkSuccess = true;
 
-            std::cout << "\n<<< Sound file check '" << id << "' [ ";
+            std::cout << std::endl << "<<< Sound file check '" << id << "' [ ";
 
             if( SDL_LoadWAV(filename.data(), &spec, (Uint8**)&s.data, (Uint32*)&s.length) == nullptr) {
                 std::cout << " ! file not found";

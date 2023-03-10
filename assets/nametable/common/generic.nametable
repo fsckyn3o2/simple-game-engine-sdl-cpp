@@ -1,4 +1,4 @@
-= { type = 'SOLID', name = 'TestSolidLayer', myParameter = 'Hello!' }
+= { type = 'L_SOLID', name = 'TestSolidLayer', myParameter = 'Hello!' }
 01
 02
 03

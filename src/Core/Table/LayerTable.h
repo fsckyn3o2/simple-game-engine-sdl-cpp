@@ -23,7 +23,7 @@ class PluginManager;
 class LayerTable {
 private:
     std::map<std::string_view, std::string> parameters;
-    LayerPlugin* _plugin;
+    LayerPlugin* _plugin{};
 public:
 
     /**
@@ -33,11 +33,11 @@ public:
      * @param _type
      * @param _name
      */
-    LayerTable(unsigned int _index, std::string_view _type, std::string_view _name, NameTable* _nameTable): index(_index), type(_type), name(_name), nameTable(_nameTable) { };
+    LayerTable(unsigned int _index, std::string_view _type, std::string_view _name, NameTable* _nameTable): index(_index), type(std::string(_type)), name(std::string(_name)), nameTable(_nameTable) { };
 
     const unsigned int index;
-    const std::string_view type;
-    const std::string_view name;
+    const std::string type;
+    const std::string name;
     const NameTable* nameTable;
     LayerPlugin* plugin() { return _plugin; }
 
@@ -48,8 +48,8 @@ public:
      * Return Id in string type (index converted to string or id parameter).
      * @return
      */
-    std::string_view id() {
-        return getParameter(LAYER_PARAMETER_ID).value_or(std::to_string(index));
+    std::string id() {
+        return this->getParameter(LAYER_PARAMETER_ID).value_or(std::to_string(index));
     }
 
     std::optional<std::string> getParameter(std::string_view key) {

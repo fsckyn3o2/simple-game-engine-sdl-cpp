@@ -24,9 +24,10 @@ private:
     std::optional<PatternTable*> loadPatternTableFromConfig(sol::table *luaPatternTable);
     BeanManager* beanManager;
 public:
-    TableManager(BeanManager* _beanManager) : beanManager(_beanManager) { };
+    explicit TableManager(BeanManager* _beanManager) : beanManager(_beanManager) { };
 
-    NameTable* nameTable(std::string id);
+    bool hasNameTable(std::string_view id);
+    NameTable* nameTable(std::string_view id);
     PatternTable* patternTable(std::string id);
 
     bool readNameTableFile(std::string_view filename, std::string_view id, NameTable *nameTable);

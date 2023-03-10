@@ -1,5 +1,5 @@
--- Common resources are loaded by default
-titleScreen = {
+screen = {
+    id = "title",
     graphics = {
         "logo_engine"
     },

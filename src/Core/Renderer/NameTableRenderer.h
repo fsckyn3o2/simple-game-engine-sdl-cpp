@@ -3,6 +3,8 @@
 
 class BeanManager;
 class NameTable;
+class LayerTable;
+
 #include <Core/Renderer/Renderer.h>
 #include <SDL2/SDL.h>
 
@@ -10,10 +12,11 @@ class NameTableRenderer: public Renderer {
 private:
     BeanManager* beanManager;
     NameTable* nameTable;
-    SDL_Texture* texture;
+    SDL_Texture* texture{};
 public:
     NameTableRenderer(BeanManager* _beanManager, NameTable* _nameTable): Renderer(), beanManager(_beanManager), nameTable(_nameTable) { };
     void init() override;
+    void update();
     void render() override;
 };
 

@@ -44,8 +44,8 @@ void NameTable::rawValue(NameTablePosition* position, unsigned int rawValue) {
 void NameTable::loadLine(unsigned int row, unsigned int layer, std::string line) {
 
     if (layer >= resolution->layers || row >= resolution->height) {
-        std::cout << "\nNameTable - loadLine : Error row and layer cannot be greater than resolution[height, layers] of nameTable :: ask [row = " << std::to_string(row) << ", layer = " << std::to_string(layer) << "],"
-                << "nametable setup [width = " << std::to_string(resolution->width) + ", height =" << std::to_string(resolution->height) + ", layer = " << std::to_string(resolution->layers) + "]\n";
+        std::cout << std::endl << "NameTable - loadLine : Error row and layer cannot be greater than resolution[height, layers] of nameTable :: ask [row = " << std::to_string(row) << ", layer = " << std::to_string(layer) << "],"
+                << "nametable setup [width = " << std::to_string(resolution->width) + ", height =" << std::to_string(resolution->height) + ", layer = " << std::to_string(resolution->layers) + "]" << std::endl;
         return ;
     }
 
@@ -61,7 +61,7 @@ void NameTable::loadLine(unsigned int row, unsigned int layer, std::string line)
         column++;
 
         if (column >= resolution->width) {
-            std::cout << "\nNameTable - loadLine : column index cannot be greater than resolution[width-1] (index start at 0, width is in pixels and start at 1) .";
+            std::cout << std::endl << "NameTable - loadLine : column index cannot be greater than resolution[width-1] (index start at 0, width is in pixels and start at 1) .";
             return ;
         }
     }

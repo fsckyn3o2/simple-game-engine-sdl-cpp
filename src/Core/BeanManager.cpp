@@ -38,7 +38,7 @@ PluginManager* BeanManager::pluginManager() {
 }
 
 void BeanManager::initialize() {
-    std::cout << "Initialize game\n";
+    std::cout << "Initialize game" << std::endl;
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cerr << "Error initializing SDL." << std::endl;
@@ -83,7 +83,7 @@ void BeanManager::initialize() {
     SDL_ShowCursor(1);
 
     LuaUtils::unloadLua();
-    std::cout << "\n\n///-- Game configuration loaded! --///\n" << std::endl;
+    std::cout << std::endl << std::endl << "///-- Game configuration loaded! --///" << std::endl;
 }
 
 SDL_Window* BeanManager::createWindow() {

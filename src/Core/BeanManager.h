@@ -18,17 +18,17 @@ class PluginManager;
 
 class BeanManager {
 private:
-    ConfigManager* _configManager;
-    AssetManager* _assetManager;
-    TableManager* _tableManager;
-    PluginManager* _pluginManager;
-    SDL_Window *_window;
-    SDL_Renderer* _renderer;
+    ConfigManager* _configManager{};
+    AssetManager* _assetManager{};
+    TableManager* _tableManager{};
+    PluginManager* _pluginManager{};
+    SDL_Window *_window{};
+    SDL_Renderer* _renderer{};
 
     std::map<int, SDL_Renderer*> _renderers;
 
 public:
-    BeanManager() { };
+    BeanManager() = default;
     void initialize();
     void runTest();
     SDL_Renderer* createRenderer(int index);

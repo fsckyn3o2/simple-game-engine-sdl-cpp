@@ -1,5 +1,5 @@
 nametable_generic = {
-    id = 'nametable_generic',
+    id = 'generic',
     filename = 'common/generic.nametable',
     resolution = {
         width = 1,

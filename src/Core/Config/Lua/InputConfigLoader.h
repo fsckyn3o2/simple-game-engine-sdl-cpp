@@ -9,7 +9,7 @@ public:
         ccc.for_each([&](sol::object const& key, sol::table const& valueTable) {
             auto id = key.as<std::string_view>();
 
-            std::cout << "        > load input config : " << id << "\n";
+            std::cout << "        > load input config : " << id << std::endl << "";
 
             auto* res = new InputAsset(id);
             valueTable.for_each([&](sol::object const& key, sol::table const& input) {

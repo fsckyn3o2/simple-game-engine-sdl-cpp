@@ -38,39 +38,39 @@ class ConfigManagerLoader {
 public:
 
     static void loadAll(ConfigManager *configManager) {
-        std::cout << "- Load Configs\n";
+        std::cout << "- Load Configs" << std::endl;
         sol::state lua;
         LuaUtils::resetLua();
 
         // VideoConfig Mapping :
-        std::cout << "   - Load Video Config\n";
+        std::cout << "   - Load Video Config" << std::endl;
         lua.script_file(CONFIG_FILE_VIDEO);
         sol::table ccc = lua["videoConfig"];
         VideoConfigLoader::load(configManager->video(), ccc);
         LuaUtils::resetLua();
 
         // SoundConfig Mapping :
-        std::cout << "   - Load Sound Config\n";
+        std::cout << "   - Load Sound Config" << std::endl;
         lua.script_file(CONFIG_FILE_SOUND);
         ccc = lua["soundConfig"];
         SoundConfigLoader::load(configManager->sound(), ccc);
         LuaUtils::resetLua();
 
         // NetworkConfig Mapping :
-        std::cout << "   - Load Network Config\n";
+        std::cout << "   - Load Network Config" << std::endl;
         lua.script_file(CONFIG_FILE_NETWORK);
         ccc = lua["networkConfig"];
         LuaUtils::resetLua();
 
         // Game Config Mapping :
-        std::cout << "   - Load Game Config\n";
+        std::cout << "   - Load Game Config" << std::endl;
         lua.script_file(CONFIG_FILE_GAME);
         ccc = lua["gameConfig"];
         GameConfigLoader::load(configManager->game(), ccc);
         LuaUtils::resetLua();
 
         // Input Config Mapping :
-        std::cout << "   - Load Input Config\n";
+        std::cout << "   - Load Input Config" << std::endl;
         lua.script_file(CONFIG_FILE_INPUT);
         ccc = lua["inputConfig"];
         InputConfigLoader::load(configManager->input(), ccc);

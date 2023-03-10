@@ -12,8 +12,7 @@ public:
                 ->setAutoStartDemoDelay(ccc.get_or<unsigned int>("autoStartDemoDelay", 30000))
                 ->setSoundClickId(ccc.get_or<std::string_view>("soundClick", "_"))
                 ->setSoundStartId(ccc.get_or<std::string_view>("soundStart", "_"))
-                ->setNameTableId(ccc.get_or<std::string_view>("nameTable", "_"))
-                ->setMetaTableId(ccc.get_or<std::string_view>("metaTable", "_"));
+                ->setNameTableId(ccc.get_or<std::string_view>("nameTable", "_"));
         return res;
     }
 };

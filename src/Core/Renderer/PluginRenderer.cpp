@@ -34,7 +34,7 @@ PluginRenderer::PluginRenderer(BeanManager* _beanManager): Renderer(), beanManag
 
 void PluginRenderer::init() {
 
-    std::cout << "\n- Initialize plugins :";
+    std::cout << std::endl << "- Initialize plugins :";
 
     for (auto* plugin : plugins) {
         if (plugin->isActive()) {
@@ -67,6 +67,6 @@ SDL_Renderer* PluginRenderer::sdlRenderer() {
 
 SDL_Texture *PluginRenderer::createFullScreenTexture() {
     return SDL_CreateTexture(this->renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING,
-                             beanManager->configManager()->video()->resolution()->width,
-                             beanManager->configManager()->video()->resolution()->height);
+                             (int) beanManager->configManager()->video()->resolution()->width,
+                             (int) beanManager->configManager()->video()->resolution()->height);
 }

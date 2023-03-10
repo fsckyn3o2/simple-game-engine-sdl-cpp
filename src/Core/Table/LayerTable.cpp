@@ -40,7 +40,7 @@ LayerTable* LayerTableLoader::loadFromNameTable(unsigned int layerIndex, std::st
     std::string_view type = _lua.get_or<std::string_view>(LAYER_PARAMETER_TYPE, PLUGIN_LAYER_NULL);
     std::string_view name = _lua.get_or(LAYER_PARAMETER_NAME, "Layer_" + std::to_string(layerIndex));
 
-    LayerTable *res = new LayerTable(layerIndex, type, name, nameTable);
+    auto *res = new LayerTable(layerIndex, type, name, nameTable);
 
     _lua.for_each([&](sol::object const& key, sol::object const& value) {
         auto _value = value.as<std::string>();

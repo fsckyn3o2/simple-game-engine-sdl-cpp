@@ -14,7 +14,7 @@
 
 void ScreenPlugin::init(PluginRenderer *renderer) {
 
-    std::cout << "\n  - SCREEN : initialization...";
+    std::cout << std::endl << "  - SCREEN : initialization...";
 
     std::string files = std::string(config->getValue("files").value());
     char delimiter = ',';
@@ -26,16 +26,24 @@ void ScreenPlugin::init(PluginRenderer *renderer) {
     }
     screenFiles.emplace_back(StringUtils::trim_copy(files));
 
+    // Load Screen configuration files
     for (const auto &filename : screenFiles) {
         std::filesystem::path filePath(SCREEN_ASSET_ROOT_DIR + filename + ".lua");
         if (std::filesystem::exists(filePath)) {
-            std::cout << "\n<< Load screen file [ " << SCREEN_ASSET_ROOT_DIR + filename + ".lua ]";
+            std::cout << std::endl << "<<< Load screen file [ " << SCREEN_ASSET_ROOT_DIR + filename + ".lua ] >>>";
             auto *screen = ScreenLoader::load(renderer->beanManager, std::filesystem::absolute(filePath));
             screens.emplace( screen->getId(), screen);
         } else {
-            std::cout << "\n<< Error screen file not found [ " << SCREEN_ASSET_ROOT_DIR + filename + ".lua ]";
+            std::cout << std::endl << "<<< Error screen file not found [ " << SCREEN_ASSET_ROOT_DIR + filename + ".lua ] >>>";
         }
     }
+
+    // Initialize Screens objects :
+    for (const auto &screen: screens) {
+        screen.second->init();
+    }
+
+    std::cout << std::endl;
 }
 
 void ScreenPlugin::updateAndRender(PluginRenderer *renderer) {

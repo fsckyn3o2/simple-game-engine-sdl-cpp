@@ -18,7 +18,7 @@ public:
 
     SoundConfig* setEffectLevel(unsigned int level) {
         if (level > 100) {
-            std::cout << "\n <<< SoundConfig - EffectLevel range is 0 - 100 : " + std::to_string(level) + " >>>";
+            std::cout << std::endl << " <<< SoundConfig - EffectLevel range is 0 - 100 : " + std::to_string(level) + " >>>";
             return this;
         }
 
@@ -28,7 +28,7 @@ public:
 
     SoundConfig* setMusicLevel(unsigned int level) {
         if (level > 100) {
-            std::cout << "\n <<< SoundConfig - MusicLevel range is 0 - 100 : " + std::to_string(level) + " >>>";
+            std::cout << std::endl << " <<< SoundConfig - MusicLevel range is 0 - 100 : " + std::to_string(level) + " >>>";
             return this;
         }
 
@@ -38,7 +38,7 @@ public:
 
     SoundConfig* setMode(std::string_view mode) {
         if (mode != "stereo" && mode != "mono" && mode != "surround") {
-            std::cout << "\n <<< SoundConfig - Mode values list is 'stereo', 'mono', 'surround' >>>";
+            std::cout << std::endl << " <<< SoundConfig - Mode values list is 'stereo', 'mono', 'surround' >>>";
             return this;
         }
 
@@ -48,7 +48,7 @@ public:
 
     unsigned int increaseMusicLevel() {
         if (_musicLevel >= 100) {
-            std::cout << "\n <<< SoundConfig - IncreaseMusicLevel is impossible, it's already set to max value >>>";
+            std::cout << std::endl << " <<< SoundConfig - IncreaseMusicLevel is impossible, it's already set to max value >>>";
             return _musicLevel;
         }
 
@@ -57,7 +57,7 @@ public:
 
     unsigned int inscreaseEffectLevel() {
         if (_effectLevel >= 100) {
-            std::cout << "\n <<< SoundConfig - IncreaseEffectLevel is impossible, it's already set to max value >>>";
+            std::cout << std::endl << " <<< SoundConfig - IncreaseEffectLevel is impossible, it's already set to max value >>>";
             return _effectLevel;
         }
 
@@ -66,7 +66,7 @@ public:
 
     unsigned int decreaseMusicLevel() {
         if (_musicLevel <= 0) {
-            std::cout << "\n <<< SoundConfig - DecreaseMusicLevel is impossible, it's already set to min value >>>";
+            std::cout << std::endl << " <<< SoundConfig - DecreaseMusicLevel is impossible, it's already set to min value >>>";
             return _musicLevel;
         }
 
@@ -75,7 +75,7 @@ public:
 
     unsigned int decreaseEffectLevel() {
         if (_effectLevel <= 0) {
-            std::cout << "\n <<< SoundConfig - DecreaseEffectLevel is impossible, it's already set to min value >>>";
+            std::cout << std::endl << " <<< SoundConfig - DecreaseEffectLevel is impossible, it's already set to min value >>>";
             return _effectLevel;
         }
 

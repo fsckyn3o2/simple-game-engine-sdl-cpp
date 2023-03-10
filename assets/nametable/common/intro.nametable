@@ -1,2 +1,2 @@
-= { type = 'SOLID', name = 'intro' }
+= { type = 'L_SOLID', name = 'intro' }
 01

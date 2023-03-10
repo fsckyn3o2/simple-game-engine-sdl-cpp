@@ -1,13 +1,12 @@
--- Common resources are loaded by default
-titleScreen = {
-    graphics = {
-        "logo_engine"
-    },
+screen = {
+    id = "intro",
     nametables = {
         "intro"
     },
     sounds = {
         "logo"
     },
-    config = {}
+    config = {
+
+    }
 }

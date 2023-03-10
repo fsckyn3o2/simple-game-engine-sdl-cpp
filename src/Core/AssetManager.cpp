@@ -39,11 +39,11 @@ std::optional<GraphicAsset*> AssetManager::loadGraphicAsset(sol::table luaGraph)
 }
 
 void AssetManager::loadCommonGraphics() {
-    std::cout << "\n- Load Common Graphics";
+    std::cout << std::endl << "- Load Common Graphics";
 
     std::filesystem::path filePath(std::string(GRAPHIC_ASSET_ROOT_DIR) + "common/index.lua");
     if (!std::filesystem::exists(filePath)) {
-        std::cout << "\n<<< AssetManager - CommonGraphics index file not found [" << GRAPHIC_ASSET_ROOT_DIR << "common/index.lua] >>>";
+        std::cout << std::endl << "<<< AssetManager - CommonGraphics index file not found [" << GRAPHIC_ASSET_ROOT_DIR << "common/index.lua] >>>";
         return ;
     }
 
@@ -54,7 +54,7 @@ void AssetManager::loadCommonGraphics() {
     graphics.for_each([&](sol::object const& key, sol::object const& value) {
         auto graphic = this->loadGraphicAsset(value.as<sol::table>());
         if (graphic.has_value()) {
-            std::cout << "\n   - GraphicAsset [" << graphic.value()->id << "] loaded";
+            std::cout << std::endl << "   - GraphicAsset [" << graphic.value()->id << "] loaded";
         }
     });
 
@@ -97,11 +97,11 @@ std::optional<SoundAsset*> AssetManager::loadSoundAsset(sol::table luaSound) {
 }
 
 void AssetManager::loadCommonSounds() {
-    std::cout << "\n- Load Common Sounds";
+    std::cout << std::endl << "- Load Common Sounds";
 
     std::filesystem::path filePath(std::string(SOUND_ASSET_ROOT_DIR) + "common/index.lua");
     if (!std::filesystem::exists(filePath)) {
-        std::cout << "\n<<< AssetManager - CommounSounds index file not found [" << std::string(SOUND_ASSET_ROOT_DIR) + "common/index.lua] >>>";
+        std::cout << std::endl << "<<< AssetManager - CommounSounds index file not found [" << std::string(SOUND_ASSET_ROOT_DIR) + "common/index.lua] >>>";
         return ;
     }
 
@@ -114,7 +114,7 @@ void AssetManager::loadCommonSounds() {
     sounds.for_each([&](sol::object const& key, sol::object const& value) {
         auto sound = this->loadSoundAsset(value.as<sol::table>());
         if (sound.has_value()) {
-            std::cout << "\n-- SoundAsset [" << sound.value()->id << "] loaded";
+            std::cout << std::endl << "-- SoundAsset [" << sound.value()->id << "] loaded";
         }
     });
 
@@ -146,11 +146,11 @@ std::optional<FontAsset*> AssetManager::loadFontAsset(sol::table luaFont) {
 }
 
 void AssetManager::loadCommonFonts() {
-    std::cout << "\n- Load Common Fonts";
+    std::cout << std::endl << "- Load Common Fonts";
 
     std::filesystem::path filePath(std::string(SOUND_ASSET_ROOT_DIR) + "common/index.lua");
     if (!std::filesystem::exists(filePath)) {
-        std::cout << "\n<<< AssetManager - CommonFonts index file not found [" << std::string(SOUND_ASSET_ROOT_DIR) << "common/index.lua] >>>";
+        std::cout << std::endl << "<<< AssetManager - CommonFonts index file not found [" << std::string(SOUND_ASSET_ROOT_DIR) << "common/index.lua] >>>";
         return ;
     }
 
@@ -163,7 +163,7 @@ void AssetManager::loadCommonFonts() {
     fonts.for_each([&](sol::object const& key, sol::object const& value) {
         auto font = this->loadFontAsset(value.as<sol::table>());
         if (font.has_value()) {
-            std::cout << "\n   - FontAsset [" << font.value()->id << "] loaded";
+            std::cout << std::endl << "   - FontAsset [" << font.value()->id << "] loaded";
         }
     });
 

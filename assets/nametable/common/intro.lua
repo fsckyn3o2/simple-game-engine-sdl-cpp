@@ -1,6 +1,6 @@
 nametable_intro = {
-    id = 'nametable_intro',
-    filename = 'common/logo.nametable',
+    id = 'intro',
+    filename = 'common/intro.nametable',
     resolution = {
         width = 1,
         height = 4,
@@ -12,6 +12,6 @@ nametable_intro = {
         }
     },
     renderer = {
-        layers = { 'ALL' },
+        layers = { 'ALL' }
     }
 }

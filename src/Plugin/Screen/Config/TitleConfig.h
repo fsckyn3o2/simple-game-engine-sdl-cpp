@@ -7,17 +7,15 @@
 class TitleConfig {
 public:
     std::string id;
-    std::string metaTableId;
     std::string nameTableId;
     std::string soundClickId;
     std::string soundStartId;
-    bool autoStartDemo;
-    unsigned int autoStartDemoDelay;
+    bool autoStartDemo{};
+    unsigned int autoStartDemoDelay{};
 
-    TitleConfig() {};
+    TitleConfig() = default;
 
     TitleConfig* setId(std::string_view _id) { id = _id; return this; }
-    TitleConfig* setMetaTableId(std::string_view _id) { metaTableId = _id; return this; }
     TitleConfig* setNameTableId(std::string_view _id) { nameTableId = _id; return this; }
     TitleConfig* setSoundClickId(std::string_view _id) { soundClickId = _id; return this; }
     TitleConfig* setSoundStartId(std::string_view _id) { soundStartId = _id; return this; }

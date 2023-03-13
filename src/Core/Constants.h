@@ -22,12 +22,6 @@
 // Font for Debug mde :
 #define DEBUG_FONT_ID "debug"
 
-#define PLUGIN_LAYER_ANIMATION "L_ANIMATION"
-#define PLUGIN_LAYER_SOLID "L_SOLID"
-#define PLUGIN_LAYER_DEFAULT "L_SOLID"
-#define PLUGIN_LAYER_NULL "NULL"
-
-
 // Plugin name :
 #define PLUGIN_DEBUG_KEY_EVENT  "DEBUG_KEY_EVENT"
 #define PLUGIN_MOUSE            "MOUSE"

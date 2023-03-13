@@ -13,7 +13,7 @@ public:
 
     virtual void init(DebugRenderer* renderer) = 0;
     virtual void updateAndRender(DebugRenderer* renderer) = 0;
-    bool isActive() const { return active; };
+    [[nodiscard]] bool isActive() const { return active; };
 };
 
 #endif //SIMPLEGAMEENGINE_DEBUGPLUGIN_H

@@ -1,2 +1,2 @@
-= { type = 'L_SOLID', name = 'intro' }
-01
+= { type = 'L_SOLID', name = 'intro', alignment = 'MIDDLE_CENTER' }
+10,11,12,13,14,15

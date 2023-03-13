@@ -44,6 +44,7 @@ public:
     }
 
     void initTextureBox(SDL_Renderer *renderer) {
+        outBox.refreshSdlValue();
         outboxTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, outBox.w, outBox.h);
         inboxTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, inBox.w, inBox.h);
     }

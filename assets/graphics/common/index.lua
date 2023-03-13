@@ -26,7 +26,7 @@ graphics = {
     {
         id = "logo_engine",
         type = "SPRITE",
-        resolution = { width = 2000, height = 200, ppu = 200, step = 20 },
+        resolution = { width = 600, height = 100, ppu = 100, step = 6 },
         filename = "common/test/logo_engine.png"
     },
     {

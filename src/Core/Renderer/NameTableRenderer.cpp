@@ -7,12 +7,13 @@
 
 void NameTableRenderer::init() {
 
-    std::cout << "nametable";
-/*    texture = SDL_CreateTexture(beanManager->renderer(),
+    std::cout << std::endl << "<<< NameTableRenderer::init >>>" << std::endl;
+
+    texture = SDL_CreateTexture(beanManager->renderer(),
                                 SDL_PIXELFORMAT_RGBA8888,
                                 SDL_TEXTUREACCESS_TARGET,
-                                (int) beanManager->configManager()->video()->resolution()->width,
-                                (int) beanManager->configManager()->video()->resolution()->height);*/
+                                beanManager->configManager()->video()->resolution()->widthI,
+                                beanManager->configManager()->video()->resolution()->heightI);
 
     for (const auto &layerConfig: this->nameTable->layers) {
         layerConfig.second->plugin()->init();
@@ -26,7 +27,8 @@ void NameTableRenderer::update() {
 }
 
 void NameTableRenderer::render() {
+    SDL_SetRenderTarget(beanManager->renderer(), this->texture); // TODO test return restul to be sure
     for (const auto &layerConfig: this->nameTable->layers) {
-        layerConfig.second->plugin()->render();
+        layerConfig.second->plugin()->render(this);
     }
 }

@@ -16,8 +16,8 @@ public:
 class VideoConfig {
 public:
     VideoConfig() : _fullscreen(false), _resolution(new VideoResolution(800, 600)) { };
-    VideoResolution* resolution() { return _resolution; }
-    bool isFullscreen() { return _fullscreen; }
+    [[nodiscard]] const VideoResolution* resolution() const { return _resolution; }
+    [[nodiscard]] bool isFullscreen() const { return _fullscreen; }
 
     VideoConfig* setFullscreen(bool fullscreen) {
         _fullscreen = fullscreen;
@@ -27,6 +27,7 @@ public:
     VideoConfig* setResolution(unsigned int width, unsigned int height) {
         // List of authorized resolutions :
         if (
+
             (width == 320  && height == 240) ||
             (width == 640  && height == 480) ||
             (width == 800  && height == 600) ||
@@ -38,7 +39,8 @@ public:
         ) {
             _resolution = new VideoResolution(width, height);
         } else {
-            std::cout << std::endl << " <<< Resolution is not supported by this engine : " << width << "/" << height << " >>>";
+            std::cout << std::endl << " <<< Resolution (" << width << "/" << height << ") is not supported by this engine !!! >>>";
+            _resolution = new VideoResolution(width, height);
         }
         return this;
     }

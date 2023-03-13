@@ -15,14 +15,20 @@ class GraphicAssetReference;
 
 class NameTableResolution {
 public:
-    NameTableResolution(unsigned int _width, unsigned int _height, unsigned int _layers) : width(_width), height(_height), layers(_layers) {
-        if (_width <= 0 || _height <= 0 || _layers <= 0) {
+    NameTableResolution(unsigned int _width, unsigned int _height, unsigned int _layers, unsigned int _ppu) : width(_width), height(_height), layers(_layers), ppu(_ppu) {
+        if (_width <= 0 || _height <= 0 || _layers <= 0 || _ppu <= 0) {
             throw std::runtime_error{"NameTableResolution accepts only (unsigned int) > 0"};
         }
     };
+    /** Width in unit , number of sprite */
     const unsigned int width;
+    /** Height in unit , number of sprite */
     const unsigned int height;
+    /** Layers number of layers to compose this nametable */
     const unsigned int layers;
+
+    /** PixelPerUnit, use to place sprite on the screen */
+    const unsigned int ppu;
 };
 
 
@@ -32,7 +38,7 @@ public:
 class NameTablePosition {
 public:
     NameTablePosition(unsigned int _x, unsigned int _y, unsigned int _layer): x(_x), y(_y), layer(_layer) {};
-    NameTablePosition* offset(NameTablePosition* _position) {
+    NameTablePosition* offset(NameTablePosition* _position) const {
         return new NameTablePosition(x + _position->x, y + _position->y, layer + _position->layer);
     };
     const unsigned int x;
@@ -44,16 +50,17 @@ public:
  * Map of tiles which compose a picture
  */
 class NameTable {
-private:
-    /**
-     * Y,x,layer : y == Row index, x == Column index, Layer == Level index (z)
-     */
-    std::vector<std::vector<std::vector<unsigned int>>> matrix;
 public:
     NameTable(std::string_view _id, std::string_view _filename, NameTableResolution* _resolution);
     const std::string_view id;
     const std::string_view filename;
     const NameTableResolution* resolution;
+
+    /**
+     * Y,x,layer : y == Row index, x == Column index, Layer == Level index (z)
+     * Direct access is maybe useful...
+     */
+    std::vector<std::vector<std::vector<unsigned int>>> matrix;
 
     /**
      * Map of Layers definition by index :  LayerTable<index, name, type [SOLID, EFFECT]>
@@ -66,11 +73,12 @@ public:
      */
     std::map<unsigned int, GraphicAssetReference*> valueMap;
 
-    GraphicAssetReference* graphicReference(unsigned int rawValue);
+    [[nodiscard]] const GraphicAssetReference* graphicReference(unsigned int rawValue) const;
+    [[nodiscard]] const GraphicAssetReference* graphicReferenceByPos(NameTablePosition* position) const;
     std::vector<unsigned int>* cell(NameTablePosition* position);
 
-    unsigned int rawValue(NameTablePosition* position);
-    void rawValue(NameTablePosition* position, unsigned int rawValue);
+    unsigned int getRawValue(NameTablePosition* position) const;
+    void setRawValue(NameTablePosition* position, unsigned int rawValue);
     void loadLine(unsigned int row, unsigned int layer, std::string line);
 };
 

@@ -14,7 +14,7 @@ public:
 
     Pos(int _x, int _y) : x(_x), y(_y) { }
 
-    [[nodiscard]] Pos offset(int oX, int oY) const {
+    Pos offset(int oX, int oY) {
         return Pos{x + oX, y + oY};
     }
 
@@ -125,20 +125,28 @@ public:
      * @param _offset
      * @param _size
      */
-    WorkerPosition(Position _from, Pos _offset, unsigned int _size): FROM(_from), OFFSET(_offset), size(_size),
-        LAST(Position{ (int) (OFFSET.x * _size), (int) (OFFSET.y * _size), _from.origin.x, _from.origin.y }) { }
+    WorkerPosition(Position _from, Pos _offset, unsigned int _size):
+        FROM(_from),
+        OFFSET(_offset),
+        size(_size),
+        LAST(Position{ (int) (OFFSET.x * _size), (int) (OFFSET.y * _size), _from.origin.x, _from.origin.y }) {
+        this->resetToBegin();
+    }
 
-    bool hasNext() const { return currentIndex < size && currentIndex >= 0 || currentIndex == -1; }
+    [[nodiscard]] bool hasNext() const { return currentIndex < size && currentIndex >= 0 || currentIndex == -1; }
 
-    void next() { currentIndex++; current = current + OFFSET; }
-    void previous() { currentIndex--; current = current - OFFSET; }
+    void next(Pos mask = Pos{1,1}) { currentIndex++; current = current + (mask*OFFSET); }
+    void previous(Pos mask = Pos{1,1}) { currentIndex--; current = current - (mask*OFFSET); }
 
-    Position cbegin() const { return FROM; }
-    Position cend() const { return LAST; }
+    [[nodiscard]] Position cbegin() const { return FROM; }
+    [[nodiscard]] Position cend() const { return LAST; }
+
     Position get(int index) { return index >= 0 && index < size ? (FROM + (OFFSET*index)) : LAST; }
 
-    void resetToEnd() { currentIndex = size; current = LAST; };
-    void resetToBegin() { currentIndex = -1; current = FROM - OFFSET; };
+    void resetToEnd(Pos withTimesOffset = Pos{0,0}) { currentIndex = (int) size; current = LAST + (withTimesOffset*OFFSET); };
+    void resetToBegin() { currentIndex = -1; current = FROM; };
+
+    void resetToBegin(Pos withTimesOffset) { currentIndex = -1; current = FROM + (withTimesOffset*OFFSET); };
 
 };
 
@@ -147,21 +155,18 @@ public:
     const int x, y;
     const int w, h;
 
-    SDL_Rect const* sdl = nullptr;
+    const SDL_Rect* sdl = nullptr;
 
-    Rect(int _x, int _y, int _w, int _h): x(_x), y(_y), w(_w), h(_h) { }
-
-    Pos* position() {
-        return new Pos(x, y);
+    explicit Rect(int _x, int _y, int _w, int _h): x(_x), y(_y), w(_w), h(_h) {
+        this->refreshSdlValue();
     }
 
-    Pos* size() {
-        return new Pos(w, h);
-    }
+    [[nodiscard]] Pos position() const { return Pos{x, y}; }
+    [[nodiscard]] Pos size() const { return Pos{w, h}; }
 
-    SDL_Rect const* refreshSdlValue() {
+    const SDL_Rect* refreshSdlValue() {
         delete sdl;
-        sdl =  new SDL_Rect {  x,  y,  w,  h };
+        sdl = new SDL_Rect{  x,  y,  w,  h };
         return sdl;
     }
 
@@ -171,8 +176,8 @@ public:
      * @param _size
      * @return new rectangle
      */
-    Rect* relativeZone(Pos* _pos, Pos* _size = nullptr) {
-        return new Rect{x+_pos->x, y+_pos->y, (_size == nullptr ? w : _size->x), (_size == nullptr ? h : _size->y)};
+    Rect* relativeZone(Pos _pos, Pos _size = Pos{0, 0}) {
+        return new Rect{x+_pos.x, y+_pos.y, (_size == nullptr ? w : _size.x), (_size == nullptr ? h : _size.y)};
     }
 
     /**
@@ -204,7 +209,7 @@ public:
         unsigned int padding = _padding*2;
         if (padding > w || padding > h) padding = 0;
         Rect *res = center(new Rect(x, y, w-padding, h-padding));
-        return res->relativeZone(new Pos(-x, -y), nullptr);
+        return res->relativeZone(Pos{-x, -y});
     }
 
     Rect* paddingLeftRight(int _padding) {
@@ -224,7 +229,7 @@ public:
     }
 
     Rect* center(Rect* rect) {
-        return relativeZone(new Pos((w - rect->w)/2, (h - rect->h)/2), rect->size());
+        return relativeZone(Pos{(w - rect->w)/2, (h - rect->h)/2}, rect->size());
     }
 
 };

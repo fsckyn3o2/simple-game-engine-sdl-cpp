@@ -15,6 +15,8 @@ private:
     SDL_Texture* texture{};
 public:
     NameTableRenderer(BeanManager* _beanManager, NameTable* _nameTable): Renderer(), beanManager(_beanManager), nameTable(_nameTable) { };
+
+    SDL_Texture* getTexture() { return texture; };
     void init() override;
     void update();
     void render() override;

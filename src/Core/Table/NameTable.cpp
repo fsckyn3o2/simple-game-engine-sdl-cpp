@@ -14,21 +14,32 @@ NameTable::NameTable(std::string_view _id, std::string_view _filename, NameTable
     }
 }
 
-GraphicAssetReference* NameTable::graphicReference(unsigned int rawValue) {
-    return valueMap.at(rawValue);
+const GraphicAssetReference* NameTable::graphicReference(unsigned int rawValue) const {
+    if(!valueMap.contains(rawValue)) {
+        std::cout << "<<< NameTable[" << id << "] (" << rawValue << ") raw value not found! >>>";
+        return nullptr;
+    } else {
+        return valueMap.at(rawValue);
+    }
+}
+
+const GraphicAssetReference* NameTable::graphicReferenceByPos(NameTablePosition* position) const {
+    return this->graphicReference(this->getRawValue(position));
 }
 
 std::vector<unsigned int>* NameTable::cell(NameTablePosition* position) {
     if( position->y >= resolution->height ||  position->x >= resolution->width || position->layer >= resolution->layers) {
-        std::cout << "NameTable - cell :: alignment is greater than resolution";
+        std::cout << "NameTable - cell :: position is greater than resolution";
         return nullptr;
     }
     return &matrix.at(position->y).at(position->x);
 }
 
-unsigned int NameTable::rawValue(NameTablePosition* position) { return matrix.at(position->y).at(position->x).at(position->layer); }
+unsigned int NameTable::getRawValue(NameTablePosition* position) const {
+    return matrix.at(position->y).at(position->x).at(position->layer);
+}
 
-void NameTable::rawValue(NameTablePosition* position, unsigned int rawValue) {
+void NameTable::setRawValue(NameTablePosition* position, unsigned int rawValue) {
     auto* _cell = this->cell(position);
     if (_cell == nullptr) return;
 
@@ -44,25 +55,31 @@ void NameTable::rawValue(NameTablePosition* position, unsigned int rawValue) {
 void NameTable::loadLine(unsigned int row, unsigned int layer, std::string line) {
 
     if (layer >= resolution->layers || row >= resolution->height) {
-        std::cout << std::endl << "NameTable - loadLine : Error row and layer cannot be greater than resolution[height, layers] of nameTable :: ask [row = " << std::to_string(row) << ", layer = " << std::to_string(layer) << "],"
-                << "nametable setup [width = " << std::to_string(resolution->width) + ", height =" << std::to_string(resolution->height) + ", layer = " << std::to_string(resolution->layers) + "]" << std::endl;
+        std::cout << std::endl << "NameTable - loadLine : Error row and layer cannot be greater than resolution[height, layers] of nameTable :: ask [row = " << std::to_string(row) << ", layer = " << std::to_string(layer) << "]," << "nametable setup [width = " << std::to_string(resolution->width) + ", height =" << std::to_string(resolution->height) + ", layer = " << std::to_string(resolution->layers) + "]" << std::endl;
         return ;
     }
 
-    size_t last = 0; size_t next;
+    if(line.find(',') == std::string::npos){
+        this->setRawValue(new NameTablePosition(0, row, layer), stoi(line));
+        return;
+    }
 
+    size_t last = 0;
+    size_t next;
     unsigned int column = 0;
-    while ((next = line.find(',', last)) != std::string::npos) {
-        std::string rawValueStr = line.substr(last, next-last);
-        unsigned int rawValue = std::atoi(rawValueStr.c_str());
-        last = next + 1;
 
-        this->rawValue(new NameTablePosition(column, row, layer), rawValue);
-        column++;
+    while((next = line.find(',', last)) != std::string::npos) {
 
         if (column >= resolution->width) {
             std::cout << std::endl << "NameTable - loadLine : column index cannot be greater than resolution[width-1] (index start at 0, width is in pixels and start at 1) .";
             return ;
         }
+
+        this->setRawValue(new NameTablePosition(column, row, layer), stoi(line.substr(last, next-last)) );
+
+        last = next+1;
+        column++;
     }
+
+    this->setRawValue(new NameTablePosition(column, row, layer), stoi(line.substr(last)));
 }

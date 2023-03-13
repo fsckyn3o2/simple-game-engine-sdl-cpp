@@ -2,9 +2,9 @@
 #define SIMPLEGAMEENGINE_SCREENINTRO_H
 
 #include <vector>
-#include <Plugin/Screen/Config/IntroConfig.h>
-#include <Core/Renderer/ScreenRenderer.h>
-#include <Core/Renderer/NameTableRenderer.h>
+#include "Plugin/Screen/Config/IntroConfig.h"
+#include "Core/Renderer/ScreenRenderer.h"
+#include "Core/Renderer/NameTableRenderer.h"
 
 class ScreenIntro: public ScreenRenderer {
 private:

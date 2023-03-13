@@ -25,7 +25,7 @@ public:
 
     void init() override;
     void update() override;
-    void render() override;
+    void render(NameTableRenderer* renderer) override;
 
     enum ReadDir {
         RIGHT=2, LEFT=4
@@ -39,13 +39,10 @@ public:
         }
     };
 
-    bool animationIsFinished() {
+    [[nodiscard]] bool animationIsFinished() const {
         return finished;
     };
 
-    std::string_view id() override {
-        return PLUGIN_LAYER_ANIMATION;
-    };
 
 private:
     std::vector<ReadDir> readdir;

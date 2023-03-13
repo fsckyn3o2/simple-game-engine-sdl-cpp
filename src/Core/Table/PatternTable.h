@@ -4,6 +4,7 @@
 class NameTable;
 
 #include <string>
+#include <utility>
 
 /**
  * Map tiles which compose a Sprite or a Shape
@@ -18,8 +19,8 @@ private:
     unsigned int posX = 0;  // ALIGNMENT of shape in environment
     unsigned int posY = 0;  // ALIGNMENT of shape in environment
 public:
-    PatternTable(std::string _id, NameTable* _nameTable) : id(_id), nameTable(_nameTable) { };
-    PatternTable(std::string _id, NameTable* _nameTable, unsigned int _origX, unsigned int _origY) : id(_id), nameTable(_nameTable), origX(_origX), origY(_origY) { };
+    PatternTable(std::string _id, NameTable* _nameTable) : id(std::move(_id)), nameTable(_nameTable) { };
+    PatternTable(std::string _id, NameTable* _nameTable, unsigned int _origX, unsigned int _origY) : id(std::move(_id)), nameTable(_nameTable), origX(_origX), origY(_origY) { };
 
 };
 

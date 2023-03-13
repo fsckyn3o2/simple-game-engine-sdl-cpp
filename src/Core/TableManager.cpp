@@ -96,6 +96,11 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
     std::string line;
     while (getline(input_stream, line)) {
         if (line.at(0) == NAME_TABLE_LAYER_SEPARATOR) {
+
+            if(row > 0) {
+                std::cout << std::endl << "<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded and detected from layer (" << layer << ") >>>";
+            }
+
             if (lineNumber > 0) layer++;
             row = 0;
 
@@ -109,7 +114,7 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
             std::cout << " >>>";
 
         } else {
-            // Default value of layer if nothing defined in first line of nametable.
+            // Set default layer if nothing defined in first line of nametable.
             if (lineNumber == 0) {
                 nameTable->layers.emplace(layer, LayerTableLoader::defaultLayer(0, nameTable));
             }
@@ -120,7 +125,8 @@ bool TableManager::readNameTableFile(std::string_view filename, std::string_view
         lineNumber++;
     }
 
-    std::cout << std::endl << "<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded from layer (" << layer << ") >>>";
+    std::cout << std::endl << "<<< TableManager - NameTable [" << id << "] (" << row << ") rows loaded and detected  from layer (" << layer << ") >>>";
+
     input_stream.close();
     return true;
 }
@@ -149,7 +155,8 @@ std::optional<NameTable*> TableManager::loadNameTableFromConfig(sol::table *luaN
     auto* resolution = new NameTableResolution(
                                         luaResolution.get_or<unsigned int>("width", 0),
                                         luaResolution.get_or<unsigned int>("height", 0),
-                                        luaResolution.get_or<unsigned int>("layers", 0)
+                                        luaResolution.get_or<unsigned int>("layers", 0),
+                                        luaResolution.get_or<unsigned int>("ppu", 0)
                                     );
     auto* nameTable = new NameTable(id, filename, resolution);
     readNameTableFile(filename, id, nameTable);
@@ -161,7 +168,7 @@ std::optional<NameTable*> TableManager::loadNameTableFromConfig(sol::table *luaN
                 std::cout << "TableManager - loadNameTable :: Map line " << key.as<std::string>() << " nameTable value to GraphicAsset is empty";
                 return ;
             }
-            unsigned int rawValue = map.get_or<unsigned int>("value", 0); // Value will map to GraphicAssetReference -> Sprite -- if not present this will be 0 by default.
+            unsigned int rawValue = map.get_or<unsigned int>("value", 0); // Value will map to GraphicAssetReference -> Sprite -- if not present it will be 0 by default.
 
             auto assetRef = LuaMapper::loadGraphicAssetReference(map);
             if(assetRef.has_value()) nameTable->valueMap.emplace(rawValue, assetRef.value());

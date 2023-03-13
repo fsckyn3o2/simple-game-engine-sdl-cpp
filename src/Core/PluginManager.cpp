@@ -14,14 +14,14 @@
 #include <Plugin/Screen/ScreenPlugin.h>
 
 LayerPlugin* PluginManager::loadLayerPlugin(LayerTable* layerTable) {
-    if ( layerTable->type == PLUGIN_LAYER_ANIMATION) {
-        std::cout << "(" << PLUGIN_LAYER_ANIMATION << ") type detected";
+    if ( layerTable->config->type() == LayerTableConfig::LAYER_TYPE::L_ANIMATION) {
+        std::cout << "(" << layerTable->config->typeStr() << ") type detected";
         return new AnimationLayerPlugin(this->beanManager, layerTable);
-    } else if ( layerTable->type == PLUGIN_LAYER_SOLID) {
-        std::cout << "(" << PLUGIN_LAYER_SOLID << ") type detected";
+    } else if ( layerTable->config->type() == LayerTableConfig::LAYER_TYPE::L_SOLID) {
+        std::cout << "(" << layerTable->config->typeStr() << ") type detected";
         return new SolidLayerPlugin(this->beanManager, layerTable);
     } else {
-        std::cout << "(" << layerTable->type << ") ERROR TYPE UNKNOWN!";
+        std::cout << "(" << layerTable->config->type() << ") ERROR TYPE UNKNOWN!";
         return nullptr;
     }
 }

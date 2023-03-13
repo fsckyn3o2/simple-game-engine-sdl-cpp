@@ -73,7 +73,7 @@ target_link_libraries(SimpleGameEngineLib
 )
 
 ## During development this executable is used for real test.
-add_executable(SimpleGameEngine ${SOURCES})
+add_executable(SimpleGameEngine ${SOURCES} src/Core/Table/Config/LayerTableConfig.h src/Core/Table/Config/NameTableConfig.h src/Core/Table/Config/Lua/LayerTableConfigLoader.h src/Core/Utils/LayerUtils.h)
 target_link_libraries(SimpleGameEngine
         ${EXTRA_LIBS}
         ${LUA_LIBRARIES}

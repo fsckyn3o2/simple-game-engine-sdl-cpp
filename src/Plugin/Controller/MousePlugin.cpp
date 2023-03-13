@@ -36,7 +36,7 @@ void MousePlugin::init(PluginRenderer *renderer) {
 
     // Load MouseCursor surface with GraphicAssetId :
     std::string_view graphicCursorId = config->getValue("graphicId").value_or("cursor");
-    asset = renderer->beanManager->assetManager()->graphic( graphicCursorId.data());
+    asset = renderer->beanManager->assetManager()->graphic(graphicCursorId.data());
     cursorConfig = static_cast<AssetCursorConfig*>(asset->config);
 
     // Position and clip of cursor on tilesheet.

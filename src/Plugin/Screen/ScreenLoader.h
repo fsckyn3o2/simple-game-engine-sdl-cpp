@@ -3,7 +3,7 @@
 
 #include <filesystem>
 #include <sol/sol.hpp>
-#include <Plugin/Screen/Intro/ScreenIntro.h>
+#include <Plugin/Screen/ScreenIntro.h>
 #include <Plugin/Screen/Config/ScreenConfig.h>
 #include <Plugin/Screen/Config/IntroConfig.h>
 #include <Plugin/Screen/Config/Lua/IntroConfigLoader.h>

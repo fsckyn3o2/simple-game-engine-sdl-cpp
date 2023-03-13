@@ -93,7 +93,7 @@ SDL_Window* BeanManager::createWindow() {
             SDL_WINDOWPOS_CENTERED,
             _configManager->video()->resolution()->widthI,
             _configManager->video()->resolution()->heightI,
-            SDL_WINDOW_BORDERLESS | (_configManager->video()->isFullscreen() ? SDL_WINDOW_FULLSCREEN : 0)
+            (_configManager->video()->isFullscreen() ? SDL_WINDOW_FULLSCREEN : 0)
     );
 
     if (!window) {

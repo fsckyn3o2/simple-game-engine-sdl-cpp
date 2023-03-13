@@ -7,6 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_surface.h>
 #include <map>
+#include <Core/Utils/Position.h>
 
 /**
  * AssetResolution is defined in bloc. A bloc is a group of pixel 1x1, 2x2, 4x4 ...
@@ -32,13 +33,15 @@ public:
     const unsigned int ppu;      // Pixel per unit
     const unsigned int width;    // In pixel
     const unsigned int height;   // In pixel
-    const unsigned int step;     // A step is number of unit used per bloc defined in this asset.
+    const unsigned int step;     // A step is the number of unit(s) defined in this asset.
+
 };
 
 class GraphicAssetPosition {
 public:
-    GraphicAssetPosition(unsigned int _x, unsigned int _y, unsigned int _z, unsigned int _step) : x(_x), y(_y), z(_z), step(_step) { };
+    GraphicAssetPosition() : x(0), y(0), z(0), step(0) { };
     GraphicAssetPosition(unsigned int _x, unsigned int _y, unsigned int _step) : x(_x), y(_y), z(0), step(_step) { };
+    GraphicAssetPosition(unsigned int _x, unsigned int _y, unsigned int _z, unsigned int _step) : x(_x), y(_y), z(_z), step(_step) { };
     const unsigned int x;
     const unsigned int y;
     const unsigned int z;    // z like layer index.
@@ -76,9 +79,13 @@ public:
     }
 };
 
+
+// TODO Add direction of step, at this time spritesheet are read from left to right
 class GraphicAsset {
 private:
     SDL_Surface* _surface{};
+    SDL_Texture* _texture{};
+    bool textureLoaded = false;
 public:
     GraphicAsset(std::string_view _id, unsigned int _type, GraphicAssetResolution *_resolution, std::string_view _filename, void* _config):
         id(std::string{ _id }), type(_type), resolution(_resolution), filename(std::string{ _filename }), config(_config) { };
@@ -108,18 +115,65 @@ public:
         return Type::UNKNOWN;
     };
 
-    bool isType(Type _type) {
+    [[nodiscard]] bool isType(Type _type) const {
         return (type & _type) == _type;
     };
 
     SDL_Surface* surface() { return _surface; }
 
+    /**
+        To use Surface : https://wiki.libsdl.org/SDL_BlitSurface
+    */
     SDL_Surface* loadSurface() {
         _surface = IMG_Load( filename.data());
         return _surface;
     }
 
-    // https://wiki.libsdl.org/SDL_BlitSurface
+    [[nodiscard]] const SDL_Texture* texture() const { return _texture; }
+
+    SDL_Texture* loadTexture(SDL_Renderer* renderer) {
+        _texture = IMG_LoadTexture(renderer, filename.data());
+        textureLoaded = true;
+        return _texture;
+    }
+
+    SDL_Texture* lazyTexture(SDL_Renderer* renderer) {
+        if(textureLoaded) {
+            return _texture;
+        } else {
+            return loadTexture(renderer);
+        }
+    }
+
+    /**
+     * Position in unit and step inside the GraphicAsset
+     * @param step
+     * @return
+     */
+    GraphicAssetPosition* getNextStepPosition(unsigned int step) {
+        if(step >= this->resolution->step) {
+            step = 0;
+        }
+        auto res = GraphicAssetPosition(0, 0, 0, this->resolution->ppu);
+        return res.offsetByStep(step, 0, 0);
+    }
+
+    /**
+     * Position in Pixel inside the GraphicAsset calculated from step and ppu (stored in resolution of this graph)
+     * @param step
+     * @return
+     */
+    Rect* getStepRect(unsigned int step) {
+        if(step >= this->resolution->step) {
+            step = 0;
+        }
+
+        auto stepPosition = GraphicAssetPosition(0,0,0,resolution->ppu).offsetByStep(step, 0, 0);
+        return new Rect((int) stepPosition->x,
+                        (int) stepPosition->y,
+                        (int) this->resolution->ppu,
+                        (int) this->resolution->ppu);
+    }
 };
 
 /**

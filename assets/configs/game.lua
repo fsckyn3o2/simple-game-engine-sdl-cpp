@@ -1,9 +1,9 @@
 gameConfig = {
     title = "My Game",
     debug = {
-        active = 1,
+        active = 0,
         fontSize = 14,
-        alignment = "TOP_LEFT",
+        alignment = "BOTTOM_RIGHT",
         maxWidth = 400,
         maxHeight = 400,
         lineHeight = 15,
@@ -20,7 +20,7 @@ gameConfig = {
     },
     plugin = {
         active = 1,
-        renderInterval = 200,
+        renderInterval = 20,
         plugins = {
            "SCREEN",
            "MOUSE"

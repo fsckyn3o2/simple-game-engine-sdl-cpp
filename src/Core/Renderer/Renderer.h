@@ -6,6 +6,7 @@ public:
     Renderer() = default;
     virtual void init() = 0;
     virtual void render() = 0;
+    // TODO Add a constant to store screen resolution used by renderer(s)
 };
 
 
